@@ -12,7 +12,7 @@ FrontEnd
 ### Install Package
 Masuk ke direktori frontEnd. Pastikan alamat direktori:
 ```
-.../Read-And_Gift/frontEnd
+.../Read-And-Gift/frontEnd
 ```
 
 Intsall package:
@@ -34,7 +34,7 @@ BackEnd
 --
 Masuk ke direktori backEnd. Pastikan alamat direktori:
 ```
-../Read_And_Gift/backEnd
+../Read-And-Gift/backEnd
 ```
 Jalankan Aplikasi (tahap development)
 ```bash
