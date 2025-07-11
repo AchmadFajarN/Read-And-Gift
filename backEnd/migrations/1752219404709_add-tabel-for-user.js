@@ -8,48 +8,37 @@
  * @returns {Promise<void> | void}
  */
 exports.up = (pgm) => {
-    pgm.createType('user_role', ['user', 'admin']);
-    pgm.createTable('users', {
+    pgm.createType('user_role', ['admin', 'user']);
+    pgm.createTable("users", {
         id: {
-            type: 'VARCHAR(50)',
             primaryKey: true,
+            type: 'VARCHAR(50)'
         },
         username: {
             type: 'VARCHAR(50)',
             notNull: true,
             unique: true
         },
-        name: {
-            type: 'VARCHAR(50)',
-            notNull: true
-        },
-        email: {
-            type: 'VARCHAR(50)',
-            notNull: true,
-            unique: true
-        },
-        password: {
+        fullname: {
             type: 'TEXT',
             notNull: true
         },
-        location: {
-            type: 'TEXT'
+        address: {
+            type: 'TEXT',
+            notNull: true
         },
-        username_ig: {
-            type: 'VARCHAR(50)'
+        joined_at: {
+            type: 'TIMESTAMP',
+            notNull: true,
+            default: pgm.func('current_timestamp')
+        },
+        photo_profile_url: {
+            type: 'TEXT',
         },
         role: {
             type: 'user_role',
             notNull: true,
             default: 'user'
-        },
-        contact_number: {
-            type: 'VARCHAR(20)',
-            notNull: true
-        },
-        joined_at: {
-            type: 'TIMESTAMP',
-            default: pgm.func('current_timestamp')
         }
     })
 };
@@ -61,5 +50,5 @@ exports.up = (pgm) => {
  */
 exports.down = (pgm) => {
     pgm.dropTable('users');
-    pgm.dropType('user_role')
+    pgm.dropType('user_role');
 };

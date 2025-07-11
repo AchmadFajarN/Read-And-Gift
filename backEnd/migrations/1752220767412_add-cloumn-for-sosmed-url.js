@@ -9,17 +9,11 @@
  * @returns {Promise<void> | void}
  */
 exports.up = (pgm) => {
-    pgm.createTable('ratings', {
-        id: {
-            type: 'VARCHAR(50)',
-            primaryKey: true
-        },
-        value: {
-            type: 'INTEGER',
-            notNull: true,
-            check: 'value >= 1 AND value <= 5'
+    pgm.addColumn('users', {
+        sosmed_url: {
+            type: 'TEXT[]'
         }
-    });
+    })
 };
 
 /**
@@ -28,5 +22,5 @@ exports.up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 exports.down = (pgm) => {
-    pgm.dropTable('ratings');
+    pgm.dropColumn("users", "sosmed_url")
 };

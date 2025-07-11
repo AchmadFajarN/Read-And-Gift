@@ -9,13 +9,12 @@
  * @returns {Promise<void> | void}
  */
 exports.up = (pgm) => {
-    pgm.addColumn('books', {
-        type_book: {
-            type: 'TEXT',
-            notNull: true,
-            check: "type_book IN ('review', 'donations')" 
+    pgm.createTable("authentications", {
+        token: {
+            type: "VARCHAR(100)",
+            notNull: true
         }
-    });
+    })
 };
 
 /**
@@ -24,5 +23,5 @@ exports.up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 exports.down = (pgm) => {
-    pgm.dropColumn('books', 'type_book');
+    pgm.dropTable("authentications");
 };
