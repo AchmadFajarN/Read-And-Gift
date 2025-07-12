@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { Pool } = require('pg');
+const path = require('path');
 
 class StorageService{
     constructor(folder) {
@@ -7,14 +8,13 @@ class StorageService{
         this._pool = new Pool();
 
         if (!fs.existsSync(folder)) {
-            fs.mkdir(folder, { recursive: true });
+            fs.mkdirSync(folder, { recursive: true });
         }
     }
 
-    async writeFile(file, meta) {
+    async writeFile(file, filename) {
         try {
-            const filename = +new Date() + meta.filename;
-            const path = `${this._folder}/${this.filename}`
+            const path = `${this._folder}/${filename}`
 
             const fileStream = fs.createWriteStream(path);
 

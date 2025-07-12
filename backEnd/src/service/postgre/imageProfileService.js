@@ -10,8 +10,8 @@ class ImageProfileService {
     async uploadImageProfile(userId, url) {
         const id = `imguser-${nanoid(16)}`;
         const query = {
-            text: "INSERT INTO image_profile_url VALUES ($1, $2, $3) RETURNIG id",
-            values: [id, userId, url]
+            text: "INSERT INTO image_profile_url VALUES ($1, $2, $3) RETURNING id",
+            values: [id, url, userId]
         };
 
         const result = await this._pool.query(query);
