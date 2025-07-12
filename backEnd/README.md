@@ -11,9 +11,30 @@ Required
 HOST=
 PORT=
 
-# node-pg-migrate url
-DATABASE_URL=
+# Postgre Config
+PGUSER=
+PGHOST=
+PGPASSWORD=
+PGDATABASE=
+PGPORT=
 
+# Authentication config
+ACCESS_TOKEN_KEY=
+REFRESH_TOKEN_KEY=
+ACCESS_TOKEN_AGE=
+
+# node-pg-migrate url
+DATABASE_URL==
+
+```
+## Authentication
+- Isi setiap variable untuk 'Authentication config' kecuali `ACCESS_TOKEN_AGE` menggunakan module javascript `crypto` di REPL, contoh:
+```js
+require('crypto').randomBytes(64).toString('hex');
+```
+- Isi `ACCESS_TOKEN_AGE` dengan waktu token akan aktif misal `3600` artinya token akan aktif selama 1 jam.
+```
+ACCESS_TOKEN_AGE=3600
 ```
 
 ## Migration
@@ -42,3 +63,39 @@ PORT=5000
 ```bash
 npm run start:dev
 ```
+
+Documentation API
+==
+User Register
+--
+### Method: `POST` 
+### Endpoint: /users/register
+Body request required. <br>
+Contoh body request: 
+```bash
+{
+    "username": "budi",
+    "fullname": "Ahmad Budi",
+    "password": "secret",
+    "email": "budi@mail.com",
+    "address": "cianjur",
+    "no_contact": "087712333212",
+    "sosmed_url": ["http://linkedin/budi", "http://instagram/budi"]
+}
+```
+### Response
+- Status code `201 Ok`
+- body response: 
+```bash
+{
+    status: 'sucess',
+    message: 'Akun berhasil terdaftar',
+    data: {
+        userId: 'users-ajsdnj1123'
+    }
+}
+```
+
+
+
+
