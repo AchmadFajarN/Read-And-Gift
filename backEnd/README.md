@@ -70,7 +70,18 @@ User Register
 --
 ### Method: `POST` 
 ### Endpoint: /users/register
-Body request required. <br>
+Body request required . <br>
+- Mode: raw (JSON)
+- Validator:
+```bash
+username: string
+fullname: string
+password: string
+email: string
+address: string
+no_contact: number
+sosmed_url: array[string]
+```
 Contoh body request: 
 ```bash
 {
@@ -95,6 +106,30 @@ Contoh body request:
     }
 }
 ```
+
+Image Profile Register
+--
+### 1. Method: `POST`
+### Endpoint: /users/{id}/profileImge
+
+Body request required
+- Mode: multipart/form-data (image)
+- Key: image
+- validator: Hanya menerima format yang diperuntukan image
+
+### Response
+- status code: 201
+- response body:
+```bash
+{
+    status: 'success',
+    message: 'Foto profile berhasil diunggah',
+    data: {
+        url: http://localhost:4000/121212-userphoto
+    }
+}
+```
+
 
 
 
