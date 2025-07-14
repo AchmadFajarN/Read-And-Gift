@@ -14,10 +14,10 @@ class AuthenticationsHandler {
         this._validator.validatePostAuthenticationPayload(req.payload);
 
         const { email, password } = req.payload;
-        const id = await this._userService.verifyUserCredentials(email, password);
+        const { id, role } = await this._userService.verifyUserCredentials(email, password);
 
-        const accessToken = this._tokenManager.generateAccessToken({ id });
-        const refreshToken = this._tokenManager.generateRefreshToken({ id });
+        const accessToken = this._tokenManager.generateAccessToken({ id, role });
+        const refreshToken = this._tokenManager.generateRefreshToken({ id, role });
 
         await this._authenticationService.addRefreshToken(refreshToken);
 
