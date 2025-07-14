@@ -3,7 +3,7 @@ const InvariantError = require('../../exeption/InvariantError');
 const NotFoundError = require('../../exeption/NotFoundError');
 const AuthorizationError = require('../../exeption/AuthorizationError');
 const { nanoid } = require('nanoid');
-const mapDBToModel = require('../../utils/mapDBToModel');
+const mapDBToModel = require('../../utils/donationMapDBToModel');
 
 class DonationBooksService {
     constructor() {
