@@ -1,5 +1,5 @@
 const { DonationBookPayloadSchema } = require('./schema');
-const InvariantError = require('../../exceptions/InvariantError');
+const InvariantError = require('../../exeption/InvariantError');
 
 const donationBookValidator = {
   validateDonationBookPayload: (payload) => {
