@@ -1,4 +1,5 @@
 const DonationBooksHandler = require('./handler');
+const routes = require('./routes');
 
 module.exports = {
   name: 'donationbooks',

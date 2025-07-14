@@ -1,0 +1,100 @@
+const autoBind = require('auto-bind');
+
+class ReviewHandler {
+    constructor(reviewService, validator) {
+        this._reviewService = reviewService;
+        this._validator = validator;
+
+        autoBind(this);
+    }
+
+    async postReview(req, h) {
+        const { title, author, publisher, publish_year, synopsis, genre, rating } = req.payload;
+        this._validator.validatePayloadReview(req.payload);
+        const { id:owner } = req.auth.credentials;
+
+        await this._reviewService.addReview({ title, author, publisher, publish_year, synopsis, genre, owner, rating });
+
+        const response = h.response({
+            status: 'success',
+            message: 'review berhasil ditambahkan'
+        }).code(201);
+
+        return response;
+    }
+
+    async getAllReview(req, h) {
+        const result = await this._reviewService.getAllReview();
+        return {
+            status: 'success',
+            message: 'Review Berhasil didapatkan',
+            data: {
+                result
+            }
+        };
+    }
+
+    async getReview(req, h) {
+        const { id } = req.params;
+
+        const result = await this._reviewService.getReviewById(id);
+        const response = h.response({
+            status: 'success',
+            message: 'Review berhasil didapatkan',
+            data: {
+                result
+            }
+        });
+
+        return response;
+    }
+
+    async getReviewByUserId(req, h) {
+        const { userId } = req.params;
+
+        const result = await this._reviewService.getReviewByUserId(userId);
+
+        const response =  h.response({
+            status: 'success',
+            message: 'Review berhasil didapatkan',
+            data: {
+                result
+            }
+        });
+        return response;
+    }
+
+    async putReview(req, h) {   
+        const { id:owner } = req.auth.credentials
+        const { id } = req.params;
+        const {  title, author, publisher, publish_year, synopsis, genre, rating  } = req.payload;
+
+        this._validator.validatePayloadReview(req.payload);
+
+        await this._reviewService.validateReviewOwner(id, owner);
+        await this._reviewService.editPostReview(id, { title, author, publisher, publish_year, synopsis, genre, owner, rating });
+        const response = h.response({
+            status: 'success',
+            message: 'review sukses diedit'
+        });
+
+        return response;
+    }
+
+    async deleteReview(req, h) {
+        const { id } = req.params;
+        const { id:owner } = req.auth.credentials;
+
+        await this._reviewService.validateReviewOwner(id, owner);
+        await this._reviewService.deleteReview(id);
+
+        const response = h.response({
+            status: 'success',
+            message: 'review berhasil dihapus'
+        }).code(200);
+
+        return response;
+    }
+}
+
+module.exports = ReviewHandler;

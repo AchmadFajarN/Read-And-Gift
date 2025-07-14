@@ -36,6 +36,7 @@ const init = async() => {
     const coverPathDonationsService = new CoverPathDonationsService();
     const donationstorageService = new StorageService(path.resolve(__dirname, 'api/donationbooks/donationbookimage/'));
     const authenticationService = new AuthenticationService();
+    const storageService = new StorageService(path.resolve(__dirname), '/api/uploadImageProfile/images');
 
     const server = Hapi.server({
         port: process.env.PORT,
