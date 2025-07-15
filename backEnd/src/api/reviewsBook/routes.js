@@ -2,7 +2,10 @@ const routes = (handler) => [
     {
         method: 'POST',
         path: '/review',
-        handler: handler.postReview
+        handler: handler.postReview,
+        options: {
+            auth: 'read_and_gift_jwt'
+        }
     },
     {
         method: 'GET',
@@ -16,18 +19,24 @@ const routes = (handler) => [
     }, 
     {
         method: 'GET',
-        path: '/review/{userId}',
+        path: '/review/user/{userId}',
         handler: handler.getReviewByUserId
     },
     {
         method: 'PUT',
         path: '/review/{id}',
-        handler: handler.putReview
+        handler: handler.putReview,
+        options: {
+            auth: 'read_and_gift_jwt'
+        }
     },
     {
         method: 'DELETE',
         path: '/review/{id}',
-        handler: handler.deleteReview
+        handler: handler.deleteReview,
+        options: {
+            auth: 'read_and_gift_jwt'
+        }
     }
 ];
 

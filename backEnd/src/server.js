@@ -4,6 +4,7 @@ const inert = require('@hapi/inert');
 const path = require('path');
 const Jwt = require('@hapi/jwt');
 const ClientError = require('./exeption/ClientError');
+const UploadValidator = require('./validator/uploads');
 
 // user
 const users = require('./api/user');
@@ -19,7 +20,6 @@ const CoverPathDonationsService = require('./service/postgre/CoverPathDonationsS
 // profile storage
 const uploadImageProfile = require("./api/uploadImageProfile");
 const StorageService = require('./service/storageService/storageService');
-const UploadValidator = require('./validator/uploads');
 const ImageProfileService = require('./service/postgre/imageProfileService');
 
 // authentication
@@ -27,6 +27,15 @@ const authentication = require('./api/Authentication');
 const TokenManager = require('./tokenize/TokenManager');
 const AuthenticationValidator = require('./validator/authentication');
 const AuthenticationService = require('./service/postgre/AuthenticationService');
+
+// review
+const review = require('./api/reviewsBook');
+const ReviewValidator = require('./validator/review');
+const ReviewBookService = require('./service/postgre/ReviewBookService');
+
+// image review
+const imageReview = require('./api/uploadImageReview');
+const ImageReviewService = require('./service/postgre/ImageReviewService');
 
 
 const init = async() => {
@@ -36,7 +45,10 @@ const init = async() => {
     const coverPathDonationsService = new CoverPathDonationsService();
     const donationstorageService = new StorageService(path.resolve(__dirname, 'api/donationbooks/donationbookimage/'));
     const authenticationService = new AuthenticationService();
-    const storageService = new StorageService(path.resolve(__dirname), '/api/uploadImageProfile/images');
+    const storageService = new StorageService(path.resolve(__dirname, 'api/uploadImageProfile/images'));
+    const reviewService = new ReviewBookService();
+    const imageReviewService = new ImageReviewService();
+    const reviewStorage = new StorageService(path.resolve(__dirname, 'api/uploadImageReview/images'));
 
     const server = Hapi.server({
         port: process.env.PORT,
@@ -60,13 +72,15 @@ const init = async() => {
             sub: false,
             maxAgeSec: process.env.ACCESS_TOKEN_AGE
         },
-        validate: (artifacts) => ({
-            isValid: true,
-            credentials: {
-                id: artifacts.decode.payload.id,
-                role: artifacts.decode.payload.role //TODO: PERLU DICEK
+        validate: (artifacts) => {
+            return{
+                isValid: true,
+                credentials: {
+                    id: artifacts.decoded.payload.id,
+                    role: artifacts.decoded.payload.role //TODO: PERLU DICEK
+                }
             }
-        })
+        }
     })
 
     await server.register([
@@ -101,6 +115,21 @@ const init = async() => {
                 donationstorageService,
                 coverPathDonationsService,
                 DonationBookValidator,
+            }
+        },
+        {
+            plugin: review,
+            options: {
+                reviewService,
+                validator: ReviewValidator
+            }
+        },
+        {
+            plugin: imageReview,
+            options: {
+                reviewStorage,
+                validator: UploadValidator,
+                imageReviewService
             }
         }
     ]);

@@ -9,18 +9,26 @@ class ReviewHandler {
     }
 
     async postReview(req, h) {
-        const { title, author, publisher, publish_year, synopsis, genre, rating } = req.payload;
-        this._validator.validatePayloadReview(req.payload);
-        const { id:owner } = req.auth.credentials;
-
-        await this._reviewService.addReview({ title, author, publisher, publish_year, synopsis, genre, owner, rating });
-
-        const response = h.response({
-            status: 'success',
-            message: 'review berhasil ditambahkan'
-        }).code(201);
-
-        return response;
+        try {
+            const { id:owner } = req.auth.credentials;
+            console.log(owner)
+            const { title, author, publisher, publish_year, synopsis, genre, rating } = req.payload;
+            this._validator.validatePayloadReview(req.payload);
+    
+            const result = await this._reviewService.addReview({ title, author, publisher, publish_year, synopsis, genre, owner, rating });
+    
+            const response = h.response({
+                status: 'success',
+                message: 'review berhasil ditambahkan',
+                data: {
+                    reviewId: result
+                }
+            }).code(201);
+    
+            return response;
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     async getAllReview(req, h) {

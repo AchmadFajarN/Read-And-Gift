@@ -15,6 +15,7 @@ class AuthenticationsHandler {
 
         const { email, password } = req.payload;
         const { id, role } = await this._userService.verifyUserCredentials(email, password);
+        console.log(id, role)
 
         const accessToken = this._tokenManager.generateAccessToken({ id, role });
         const refreshToken = this._tokenManager.generateRefreshToken({ id, role });
@@ -39,9 +40,9 @@ class AuthenticationsHandler {
 
         const { refreshToken } = req.payload;
         await this._authenticationService.verifyRefreshToken(refreshToken);
-        const { id } = this._tokenManager.verifyRefreshToken(refreshToken);
+        const { id, role } = this._tokenManager.verifyRefreshToken(refreshToken);
 
-        const accessToken = this._tokenManager.generateAccessToken({ id });
+        const accessToken = this._tokenManager.generateAccessToken({ id, role });
         return {
             status: 'success',
             message: 'Access token berhasil diperbarui',

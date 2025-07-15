@@ -40,7 +40,7 @@ class UserService {
 
     async verifyUserCredentials(email, password) {
         const query = {
-            text: 'SELECT email, password, role FROM users WHERE email = $1',
+            text: 'SELECT id, email, password, role FROM users WHERE email = $1',
             values: [email]
         };
 
@@ -56,7 +56,7 @@ class UserService {
         if (!match) {
             throw new AuthenticationError('kredential yang anda berikan salah')
         }
-
+        
         return {id, role};
     }
 
