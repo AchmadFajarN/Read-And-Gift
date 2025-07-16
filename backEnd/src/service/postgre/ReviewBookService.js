@@ -24,7 +24,17 @@ class ReviewBookService{
 
     async getAllReview() {
         const query = {
-            text: 'SELECT title, author, publisher, publish_year, synopsis, genre FROM review_books',
+            text: `
+            SELECT 
+                review_books.title, 
+                review_books.author, 
+                review_books.publisher, 
+                review_books.publish_year, 
+                review_books.synopsis, 
+                review_books.genre,
+                cover_url_reviews
+            FROM review_books LEFT JOIN
+                cover_url_reviews ON review_book_id = review_books.id`,
         }
 
         const result = await this._pool.query(query);
@@ -33,7 +43,18 @@ class ReviewBookService{
 
     async getReviewById(id) {
         const query = {
-            text: 'SELECT * FROM review_books WHERE id = $1',
+            text: `
+            SELECT 
+                review_books.title,
+                review_books.author,
+                review_books.publisher,
+                review_books.publish_year,
+                review_books.synopsis,
+                review_books.genre,
+                cover_url_reviews.review_book_id
+            FROM review_books LEFT JOIN 
+                cover_url_reviews ON review_book_id = review_books.id
+            WHERE review_books.id = $1`,
             values: [id]
         }
 
@@ -43,7 +64,7 @@ class ReviewBookService{
             throw new NotFoundError('buku tidak ditemukan')
         }
 
-        return result.rows;
+        return result.rows[0];
     }
 
     async getReviewByUserId(userId) {
@@ -107,6 +128,19 @@ class ReviewBookService{
 
         if (result.rows[0].owner !== ownerId) {
             throw new AuthorizationError('anda tidak berhak mengakses resource ini')
+        }
+    }
+
+    async verifyReviewExist(reviewId) {
+        const query = {
+            text: 'SELECT * FROM review_books WHERE  id = $1',
+            values: [reviewId]
+        }
+
+        const result = await this._pool.query(query);
+
+        if (!result.rows.length) {
+            throw new NotFoundError('review tidak ditemukan')
         }
     }
 }
