@@ -3,6 +3,7 @@ const { nanoid } = require("nanoid");
 const bcrypt = require('bcrypt');
 const InvariantError = require('../../exeption/InvariantError');
 const AuthenticationError = require('../../exeption/AuthenticationError');
+const NotFoundError = require('../../exeption/NotFoundError');
 
 class UserService {
     constructor() {
@@ -58,6 +59,58 @@ class UserService {
         }
         
         return {id, role};
+    }
+
+    async getUserById(id) {
+        const query = {
+            text: `SELECT 
+                      users.username,
+                      users.fullname,
+                      image_profile_url.url
+                   FROM users LEFT JOIN
+                      image_profile_url ON users.id = image_profile_url.user_id
+                   WHERE users.id = $1`,
+            values: [id]
+        }
+        const result = await this._pool.query(query);
+        
+        if (!result.rows.length) {
+            throw new NotFoundError('user tidak ditemukan');
+        }
+
+        return await result.rows[0];
+    }
+
+    async editUserById(userId, { username, fullname, address, sosmed_url, no_contact }) {
+        const query = {
+            text: `UPDATE users
+            SET username = $1,
+                fullname = $2,
+                address = $3,
+                sosmed_url = $4,
+                no_contact = $5
+            WHERE id = $6 RETURNING id`,
+            values: [username, fullname, address, sosmed_url, no_contact, userId]
+        }
+
+        const result = await this._pool.query(query);
+
+        if (!result.rows.length) {
+            throw new NotFoundError('user tidak ditemukan')
+        }
+    }
+
+    async deleteUserById(userId) {
+        const query = {
+            text: 'DELETE from users WHERE id = $1',
+            values: [userId]
+        };
+
+        const result = await this._pool.query(query);
+
+        if (!result.rows.length) {
+            throw new NotFoundError('user tidak ditemukan')
+        }
     }
 
 }

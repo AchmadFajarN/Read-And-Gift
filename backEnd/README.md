@@ -125,8 +125,85 @@ Body request required
     status: 'success',
     message: 'Foto profile berhasil diunggah',
     data: {
-        url: http://localhost:4000/121212-userphoto
+        url: http://localhost:4000/profile/121212-userphoto
     }
+}
+```
+
+
+User Service
+--
+### 1. Get User By Id
+### Method: `GET`,
+### Endpoint: '/user/{id}'
+- User Id as params required
+- Bearer Token As Authorization is Required
+
+### Response
+- Status Code(200)
+- Reponse body:
+```bash
+{
+    status: 'success',
+    data: {
+        username: 'budi',
+        fullname: 'ahmad budi',
+        image_profile_url: 'http://localhost:5000/profile/11221-userphoto' 
+    }
+}
+```
+<br>
+
+### 2. Edit User By Id
+### Method: `PUT`
+### Endpoint: '/user/{id}'
+- User id as param required
+- Bearer Token As Authorization is Required
+- Hanya pemilik akun yang bisa mengubah user
+
+body request required
+- validator:
+```bash
+{
+    username: string,
+    fullname: string,
+    address: string,
+    sosmed_url: array[string]
+}
+```
+contoh:
+```json
+{
+    "username": "John",
+    "fullname": "John Doe",
+    "address": "Tasik Malaya",
+    "sosmed_url": ["http://linkedin/john", "https://instagram/john]
+}
+```
+### response
+- status code(200)
+- response body: 
+```bash
+{
+    status: 'success',
+    message: 'akun berhasil diupdate'
+}
+```
+
+### 3. Delete User By Id
+### Method: `DELETE`
+### Endpoint: '/user/{id}'
+- User id as param required
+- Bearer Token As Authorization is Required
+- Hanya pemilik akun yang bisa menghapus user
+
+### response
+- status code(200)
+- response body:
+```json
+{
+    "status": "success",
+    "message": "akun berhasil dihapus"
 }
 ```
 
