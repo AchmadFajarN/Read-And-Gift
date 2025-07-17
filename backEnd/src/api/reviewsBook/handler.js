@@ -45,12 +45,12 @@ class ReviewHandler {
     async getReview(req, h) {
         const { id } = req.params;
 
-        const result = await this._reviewService.getReviewById(id);
+        const review = await this._reviewService.getReviewById(id);
         const response = h.response({
             status: 'success',
             message: 'Review berhasil didapatkan',
             data: {
-                result
+                review
             }
         });
 

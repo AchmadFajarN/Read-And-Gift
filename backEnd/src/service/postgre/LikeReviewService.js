@@ -29,13 +29,13 @@ class LikeReviewService {
 
     async getLikesByReviewId(reviewId) {
         const query = {
-            text: 'SELECT COUNT(*) FROM likes_review WHERE review_id = $1',
+            text: 'SELECT user_id FROM likes_review WHERE review_id = $1',
             values: [reviewId]
         };
 
         const result = await this._pool.query(query);
 
-        return parseInt(result.rows[0].count, 10);
+        return result.rows;
     }
 
     async deleteLikeByUserId(userId, reviewId) {

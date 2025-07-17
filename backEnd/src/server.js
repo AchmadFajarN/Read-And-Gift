@@ -41,6 +41,11 @@ const ImageReviewService = require('./service/postgre/ImageReviewService');
 const like_review = require('./api/likeReview')
 const LikeReviewService = require('./service/postgre/LikeReviewService');
 
+// comment
+const comment_review = require('./api/commentReview');
+const commentValidator = require('./validator/commentReview');
+const CommentReviewService = require('./service/postgre/CommentReviewService');
+
 
 const init = async() => {
     const userService = new UserService();
@@ -50,10 +55,11 @@ const init = async() => {
     const donationstorageService = new StorageService(path.resolve(__dirname, 'api/donationbooks/donationbookimage/'));
     const authenticationService = new AuthenticationService();
     const storageService = new StorageService(path.resolve(__dirname, 'api/uploadImageProfile/images'));
-    const reviewService = new ReviewBookService();
     const imageReviewService = new ImageReviewService();
     const reviewStorage = new StorageService(path.resolve(__dirname, 'api/uploadImageReview/images'));
     const likeService = new LikeReviewService();
+    const commentService = new CommentReviewService()
+    const reviewService = new ReviewBookService(likeService, commentService);
 
     const server = Hapi.server({
         port: process.env.PORT,
@@ -141,6 +147,14 @@ const init = async() => {
             plugin: like_review,
             options: {
                 likeService,
+                reviewService
+            }
+        },
+        {
+            plugin: comment_review,
+            options: {
+                commentService,
+                validator: commentValidator,
                 reviewService
             }
         }

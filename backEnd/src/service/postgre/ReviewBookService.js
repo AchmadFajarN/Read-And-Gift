@@ -5,8 +5,10 @@ const InvariantError = require('../../exeption/InvariantError');
 const AuthorizationError = require('../../exeption/AuthorizationError');
 
 class ReviewBookService{
-    constructor() {
+    constructor(likeService, commentService) {
         this._pool = new Pool();
+        this._likeService = likeService;
+        this._commentService = commentService;
     }
 
     async addReview({ title, author, publisher, publish_year, synopsis, genre, owner, rating }) {
@@ -32,7 +34,7 @@ class ReviewBookService{
                 review_books.publish_year, 
                 review_books.synopsis, 
                 review_books.genre,
-                cover_url_reviews
+                cover_url_reviews.url
             FROM review_books LEFT JOIN
                 cover_url_reviews ON review_book_id = review_books.id`,
         }
@@ -44,27 +46,39 @@ class ReviewBookService{
     async getReviewById(id) {
         const query = {
             text: `
-            SELECT 
+            SELECT
+                review_books.id,
                 review_books.title,
                 review_books.author,
                 review_books.publisher,
                 review_books.publish_year,
                 review_books.synopsis,
                 review_books.genre,
-                cover_url_reviews.review_book_id
-            FROM review_books LEFT JOIN 
-                cover_url_reviews ON review_book_id = review_books.id
-            WHERE review_books.id = $1`,
+                cover_url_reviews.url AS cover_url
+            FROM review_books
+            LEFT JOIN cover_url_reviews ON review_books.id = cover_url_reviews.review_book_id
+            WHERE review_books.id = $1
+            `,
             values: [id]
         }
 
         const result = await this._pool.query(query);
+        
 
         if (!result.rows.length) {
             throw new NotFoundError('buku tidak ditemukan')
         }
 
-        return result.rows[0];
+        const detail = result.rows[0]
+
+        const likes = await this._likeService.getLikesByReviewId(id);
+        const comments = await this._commentService.getComment(id);
+
+        return {
+            ...detail,
+            likes: likes.length,
+            comments
+        };
     }
 
     async getReviewByUserId(userId) {
