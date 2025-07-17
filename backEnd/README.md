@@ -27,7 +27,7 @@ ACCESS_TOKEN_AGE=
 DATABASE_URL==
 
 ```
-## Authentication
+## Authentication Config
 - Isi setiap variable untuk 'Authentication config' kecuali `ACCESS_TOKEN_AGE` menggunakan module javascript `crypto` di REPL, contoh:
 ```js
 require('crypto').randomBytes(64).toString('hex');
