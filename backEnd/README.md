@@ -207,6 +207,306 @@ contoh:
 }
 ```
 
+Authentication
+--
+### 1. Login
+- Method: `POST`
+- Endpoint: `/auth/login`
+- Body request (raw JSON):
+```json
+{
+  "email": "user@mail.com",
+  "password": "yourpassword"
+}
+```
+- Response:
+```json
+{
+  "status": "success",
+  "message": "Login Berhasil",
+  "data": {
+    "accessToken": "<jwt-access-token>",
+    "refreshToken": "<jwt-refresh-token>"
+  }
+}
+```
+
+### 2. Refresh Token
+- Method: `PUT`
+- Endpoint: `/auth/login`
+- Body request:
+```json
+{
+  "refreshToken": "<jwt-refresh-token>"
+}
+```
+- Response:
+```json
+{
+  "status": "success",
+  "message": "Access token berhasil diperbarui",
+  "data": {
+    "accessToken": "<jwt-access-token>"
+  }
+}
+```
+
+### 3. Logout
+- Method: `DELETE`
+- Endpoint: `/auth/login`
+- Body request:
+```json
+{
+  "refreshToken": "<jwt-refresh-token>"
+}
+```
+- Response:
+```json
+{
+  "status": "success",
+  "message": "refresh token berhasil dihapus"
+}
+```
+
+Upload Image Profile
+--
+### 1. Get Foto Profil
+- Method: `GET`
+- Endpoint: `/profile/{params*}`
+- Response:  
+  - Mengembalikan file gambar sesuai path.
+
+Review Buku
+--
+### 1. Tambah Review
+- Method: `POST`
+- Endpoint: `/review`
+- Authorization: Bearer Token Required
+- Body request:
+```json
+{
+  "title": "Buku A",
+  "author": "Penulis A",
+  "publisher": "Penerbit A",
+  "publish_year": 2024,
+  "synopsis": "Sinopsis buku",
+  "genre": ["Fiksi", "Drama"],
+  "rating": 5
+}
+```
+- Response:
+```json
+{
+  "status": "success",
+  "message": "review berhasil ditambahkan",
+  "data": {
+    "reviewId": "review-xxxx"
+  }
+}
+```
+
+### 2. Get Semua Review
+- Method: `GET`
+- Endpoint: `/review`
+- Response:
+```json
+{
+  "status": "success",
+  "message": "Review Berhasil didapatkan",
+  "data": {
+    "result": [ ... ]
+  }
+}
+```
+
+### 3. Get Review By Id
+- Method: `GET`
+- Endpoint: `/review/{id}`
+- Response:
+```json
+{
+  "status": "success",
+  "message": "Review berhasil didapatkan",
+  "data": {
+    "review": {
+      "id": "review-xxxx",
+      "title": "...",
+      "author": "...",
+      "publisher": "...",
+      "publish_year": 2024,
+      "synopsis": "...",
+      "genre": ["Fiksi"],
+      "cover_url": "...",
+      "likes": 10,
+      "comments": [ ... ]
+    }
+  }
+}
+```
+
+### 4. Get Review By User
+- Method: `GET`
+- Endpoint: `/review/user/{userId}`
+- Response:  
+  - Sama seperti get semua review, tapi hanya milik user tertentu.
+
+### 5. Edit Review
+- Method: `PUT`
+- Endpoint: `/review/{id}`
+- Authorization: Bearer Token Required
+- Body request:  
+  - Sama seperti tambah review.
+- Response:
+```json
+{
+  "status": "success",
+  "message": "review sukses diedit"
+}
+```
+
+### 6. Delete Review
+- Method: `DELETE`
+- Endpoint: `/review/{id}`
+- Authorization: Bearer Token Required
+- Response:
+```json
+{
+  "status": "success",
+  "message": "review berhasil dihapus"
+}
+```
+
+Upload Image Review
+--
+### 1. Upload Cover Review
+- Method: `POST`
+- Endpoint: `/review/{id}/img`
+- Body request (multipart/form-data):
+  - Key: `image` (file)
+- Response:
+```json
+{
+  "status": "success",
+  "message": "image berhasil ditambahkan",
+  "data": {
+    "url": "http://localhost:5000/review/img/123456-cover.jpg"
+  }
+}
+```
+
+### 2. Get Cover Review
+- Method: `GET`
+- Endpoint: `/review/img/{params*}`
+- Response:  
+  - Mengembalikan file gambar sesuai path.
+
+Like Review
+--
+### 1. Like Review
+- Method: `POST`
+- Endpoint: `/like/{reviewId}`
+- Authorization: Bearer Token Required
+- Response:
+```json
+{
+  "status": "success",
+  "message": "like berhasil ditambahkan"
+}
+```
+
+### 2. Get Likes
+- Method: `GET`
+- Endpoint: `/like/{reviewId}`
+- Authorization: Bearer Token Required
+- Response:
+```json
+{
+  "status": "success",
+  "data": {
+    "likes": [
+      { "user_id": "users-xxxx" }
+    ]
+  }
+}
+```
+
+### 3. Unlike Review
+- Method: `DELETE`
+- Endpoint: `/like/{reviewId}`
+- Authorization: Bearer Token Required
+- Response:
+```json
+{
+  "status": "success",
+  "message": "like berhasil dihapus"
+}
+```
+
+Comment Review
+--
+### 1. Tambah Komentar
+- Method: `POST`
+- Endpoint: `/comment/{reviewId}`
+- Authorization: Bearer Token Required
+- Body request:
+```json
+{
+  "comment": "Komentar anda"
+}
+```
+- Response:
+```json
+{
+  "status": "success",
+  "message": "komen berhasil ditambahkan"
+}
+```
+
+### 2. Get Komentar
+- Method: `GET`
+- Endpoint: `/comment/{reviewId}`
+- Authorization: Bearer Token Required
+- Response:
+```json
+{
+  "status": "success",
+  "data": {
+    "comments": [
+      {
+        "comment": "Komentar anda",
+        "username": "user"
+      }
+    ]
+  }
+}
+```
+
+### 3. Edit Komentar
+- Method: `PUT`
+- Endpoint: `/comment/{reviewId}`
+- Authorization: Bearer Token Required
+- Body request:
+```json
+{
+  "comment": "Komentar baru"
+}
+```
+- Response:
+```json
+{
+  "status": "success",
+  "message": "Komentar berhasil di update"
+}
+```
+
+### 4. Delete Komentar
+- Method: `DELETE`
+- Endpoint: `/comment/{reviewId}`
+- Authorization: Bearer Token Required
+- Response:
+```json
+{
+  "status":
 
 
 
