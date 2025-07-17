@@ -10,11 +10,11 @@ class CommentReviewHandler {
     }
 
     async postCommentIdReview(req, h) {
+        this._validator.validateCommentPayload(req.payload);
         const { reviewId } = req.params;
         const { id: userId } = req.auth.credentials;
         const { comment } = req.payload;
         
-        this._validator.validateCommentPayload(req.payload);
         await this._reviewService.verifyReviewExist(reviewId);
         await this._commentService.addComment(reviewId, userId, comment);
 
@@ -43,11 +43,11 @@ class CommentReviewHandler {
     }
 
     async putCommentIdReview(req,h) {
+        this._validator.validateCommentPayload(req.payload);
         const { reviewId } = req.params;
         const { id: userId } = req.auth.credentials;
         const { comment } = req.payload;
 
-        this._validator.validateCommentPayload(req.payload);
         await this._reviewService.verifyReviewExist(reviewId);
         await this._commentService.editComment(reviewId, userId, comment);
         
