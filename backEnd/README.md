@@ -506,8 +506,10 @@ Comment Review
 - Response:
 ```json
 {
-  "status":
-
+  "status": "success",
+  "message": "komentar berhasil dihapus"
+}
+```
 
 
 
