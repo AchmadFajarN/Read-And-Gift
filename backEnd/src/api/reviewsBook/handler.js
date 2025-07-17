@@ -92,8 +92,9 @@ class ReviewHandler {
     async deleteReview(req, h) {
         const { id } = req.params;
         const { id:owner } = req.auth.credentials;
+        const { role } = req.auth.credentials;
 
-        await this._reviewService.validateReviewOwner(id, owner);
+        await this._reviewService.validateReviewOwner(id, owner, role);
         await this._reviewService.deleteReview(id);
 
         const response = h.response({

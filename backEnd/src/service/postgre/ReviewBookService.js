@@ -128,7 +128,7 @@ class ReviewBookService{
         }
     }
 
-    async validateReviewOwner(reviewId, ownerId) {
+    async validateReviewOwner(reviewId, ownerId, role) {
         const query = {
             text: 'SELECT owner FROM review_books WHERE id = $1',
             values: [reviewId]
@@ -140,7 +140,7 @@ class ReviewBookService{
             throw new NotFoundError('review tidak ditemukan')
         }
 
-        if (result.rows[0].owner !== ownerId) {
+        if (result.rows[0].owner !== ownerId && role !== 'admin') {
             throw new AuthorizationError('anda tidak berhak mengakses resource ini')
         }
     }
