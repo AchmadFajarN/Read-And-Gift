@@ -94,8 +94,8 @@ const query = {
  
     const result = await this._pool.query(query);
  
-    if (!result.rows.length) {
-      throw new NotFoundError('Buku gagal dihapus. Id tidak ditemukan');
+    if (result.rows.length === 0) {
+      return
     }
  
     return result.rows[0].id;

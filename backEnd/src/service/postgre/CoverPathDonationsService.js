@@ -1,6 +1,9 @@
+const { nanoid } = require("nanoid");
+const { Pool } = require('pg');
+
 class CoverPathDonationsService {
-  constructor(pool) {
-    this._pool = pool;
+  constructor() {
+    this._pool = new Pool();
   }
 
   async addCoverPath(donationId, path) {
@@ -8,7 +11,7 @@ class CoverPathDonationsService {
 
   const query = {
     text: `
-      INSERT INTO cover_url_donations (id, donation_id, url)
+      INSERT INTO cover_path_donations (id, donation_id, donation_image_path)
       VALUES ($1, $2, $3)
     `,
     values: [id, donationId, path],

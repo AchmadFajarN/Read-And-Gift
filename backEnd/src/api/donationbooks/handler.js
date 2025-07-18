@@ -15,6 +15,7 @@ class DonationBooksHandler {
     try {
     const { id } = request.auth.credentials;
     const { payload } = request;
+    console.log("JALAN");
 
     this._donationBookValidator.validateDonationBookPayload(payload);
     const donationData = {
@@ -77,7 +78,8 @@ class DonationBooksHandler {
   async putDonationBookByIdHandler(request, h) {
     try{
     const { payload } = request;
-    this._donationBookValidator.validateDonationBookPayload(payload);
+    console.log("PAYLIAD TEST", payload);
+    // this._donationBookValidator.validateDonationBookPayload(payload);
     const { id } = request.params;
     const { id: credentialId } = request.auth.credentials;
     const { role } = request.auth.credentials;

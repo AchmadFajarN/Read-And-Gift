@@ -207,7 +207,161 @@ contoh:
 }
 ```
 
+# DONATIONS API
+## Add Donation Book
+__Method__
+- Method: POST
+- Endpoint: /donations
+- Authentication: Bearer Token (JWT) required
+__Body Request:__
+Header: multipart/form-data
+```json
+Request Body:
+{
+  "title": "string",
+  "author": "string",
+  "publisher": "string",
+  "publishYear": "string",
+  "synopsis": "string",
+  "genre": "string",
+  "bookCondition": "string",
+  "cover": <image file>
+}
+```
 
+__Response Body:__
+- Status Code: 201 Created
+```json
+Body Respone:
+{
+  "status": "success",
+  "message": "Buku donasi berhasil ditambahkan",
+  "data": {
+    "bookId": "donation_book-xxxxxxxxxx"
+  }
+}
+```
 
+## Get All Donation Books
+__Method__
+- Method: GET
+- Endpoint: /donations
 
+__Response Body:__
+Status Code: 200 OK
+```json
+Body Response:
+{
+  "status": "success",
+  "data": {
+    "books": [
+      {
+        "id": "donation_book-xxxxx",
+        "title": "Belajar Node.js",
+        "author": "Ahmad Budi",
+        "synopsis": "Buku tentang Node.js",
+        "donation_image_path": "/uploads/donationCovers/donation_book-xxxxx.jpg"
+      }
+    ]
+  }
+}
+```
 
+## Get Donation Book by ID
+__Method__
+Method: GET
+Endpoint: /donations/{id}
+
+__Response Body:__
+Status Code: 200 OK
+```json
+Body Response:
+{
+  "status": "success",
+  "data": {
+    "book": {
+      "id": "donation_book-xxxxx",
+      "title": "Belajar Node.js",
+      "author": "Ahmad Budi",
+      "publisher": "Informatika",
+      "publishYear": "2024",
+      "synopsis": "Buku tentang Node.js",
+      "genre": "Teknologi",
+      "bookCondition": "Baik",
+      "createdAt": "2024-01-01T00:00:00.000Z",
+      "updatedAt": "2024-01-01T00:00:00.000Z",
+      "username": "budi"
+    }
+  }
+}
+```
+
+## Edit Donation Book by ID
+__Method__
+- Method: PUT
+- Endpoint: /donations/{id}
+- Authentication: Bearer Token (JWT) required
+- Authorization: Hanya pemilik buku atau admin yang dapat mengubah
+
+__Body Request:__
+Header: multipart/form-data
+```json
+Request Body:
+{
+  "title": "string",
+  "author": "string",
+  "publisher": "string",
+  "publishYear": "string",
+  "synopsis": "string",
+  "genre": "string",
+  "bookCondition": "string"
+}
+```
+
+__Response Body:__
+- Status Code: 200 OK
+```json
+Body Response:
+{
+  "status": "success",
+  "message": "Buku berhasil diperbarui"
+}
+```
+
+## Delete Donation Book by ID
+__Method__
+- Method: DELETE
+- Endpoint: /donations/{id}
+- Authentication: Bearer Token (JWT) required
+- Authorization: Hanya pemilik buku atau admin yang dapat menghapus
+
+__Response Body:__
+- Status Code: 200 OK
+
+```json
+Body Response:
+{
+  "status": "success",
+  "message": "Buku berhasil dihapus"
+}
+```
+
+# RECIPIENT API
+__Method__
+- Method: POST
+- Endpoint: /donations/{donationBookId}/request
+- Authentication: Bearer Token (JWT) required
+- Authorization: Hanya penerima buku yang dapat mengajukan permintaan
+
+__Response Body:__
+- Status Code: 200 OK
+``` json
+Body Response:
+{
+  "status": "success",
+  "data": {
+    "donationStatus": "pending",
+    "id": "recipient_donation-xxxxxxxxxx"
+  }
+}
+```
