@@ -33,7 +33,8 @@ class ReviewHandler {
 
     async getAllReview(req, h) {
         const page = parseInt(req.query.page, 10) || 1;
-        const result = await this._reviewService.getAllReview(page);
+        const limit = parseInt(req.query.limit, 10) || 9;
+        const result = await this._reviewService.getAllReview(page, limit);
         return {
             status: 'success',
             message: 'Review Berhasil didapatkan',

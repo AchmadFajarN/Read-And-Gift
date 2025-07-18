@@ -305,30 +305,16 @@ Review Buku
 }
 ```
 
-### 2. Get Semua Review
-- Method: `GET`
-- Endpoint: `/review`
-- Response:
-```json
-{
-  "status": "success",
-  "message": "Review Berhasil didapatkan",
-  "data": {
-    "result": [ ... ]
-  }
-}
-```
-
-### Get Semua Review (Pagination)
+### 2. Get Semua Review (Pagination)
 - **Method:** `GET`
 - **Endpoint:** `/review`
-- **Query Parameter:**  
+- **Query Parameter:**
   - `page` (opsional, default: 1) — nomor halaman yang ingin diambil
-  - Setiap halaman berisi maksimal 9 review
+  - `limit` (opsional, default: 9) — jumlah review per halaman
 
 #### Contoh Request:
 ```
-GET /review?page=1
+GET /review?page=2&limit=9
 ```
 
 #### Contoh Response:
@@ -346,18 +332,16 @@ GET /review?page=1
         "synopsis": "Sinopsis buku",
         "genre": ["Fiksi", "Drama"],
         "url": "http://localhost:5000/review/img/cover.jpg"
-      },
-      ...
+      }
+      // ... maksimal 9 review per halaman
     ]
   }
 }
 ```
 
 #### Penjelasan:
-- Gunakan query parameter `page` untuk mengambil halaman tertentu.
-- Jika tidak menyertakan `page`, maka default adalah halaman pertama (`page=1`).
-- Setiap halaman berisi maksimal 9 review.
-
+- Gunakan query parameter `page` untuk memilih halaman, dan `limit` untuk menentukan jumlah review per halaman.
+- Jika tidak menyertakan parameter, maka default adalah halaman pertama dengan 9 review.
 
 ### 3. Get Review By Id
 - Method: `GET`

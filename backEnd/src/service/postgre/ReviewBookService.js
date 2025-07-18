@@ -24,8 +24,7 @@ class ReviewBookService{
         return result.rows[0].id
     }
 
-    async getAllReview(page = 1) {
-        const limit = 9;
+    async getAllReview(page = 1, limit = 9) {
         const offset =  (page - 1) * limit
         const query = {
             text: `
