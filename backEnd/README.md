@@ -390,7 +390,43 @@ GET /review?page=1
 - Response:  
   - Sama seperti get semua review, tapi hanya milik user tertentu.
 
-### 5. Edit Review
+### 5. Get Review By Title
+- **Method:** `GET`
+- **Endpoint:** `/review/title/{title}`
+- **Path Parameter:**  
+  - `title` — judul buku yang ingin dicari (bisa partial, tidak case sensitive)
+
+#### Contoh Request:
+```
+GET /review/title/Harry
+```
+
+#### Contoh Response:
+```json
+{
+  "status": "success",
+  "data": {
+    "review": [
+      {
+        "title": "Harry Potter and the Sorcerer's Stone",
+        "author": "J.K. Rowling",
+        "publisher": "Bloomsbury",
+        "publish_year": 1997,
+        "synopsis": "Petualangan Harry Potter...",
+        "genre": ["Fantasi"],
+        "url": "http://localhost:5000/review/img/harry.jpg"
+      }
+      // ...review lain yang judulnya mengandung kata 'Harry'
+    ]
+  }
+}
+```
+
+#### Penjelasan:
+- Endpoint ini akan mengembalikan semua review buku yang judulnya mengandung kata sesuai parameter `title`.
+- Cocok untuk fitur pencarian review berdasarkan judul buku.
+
+### 6. Edit Review
 - Method: `PUT`
 - Endpoint: `/review/{id}`
 - Authorization: Bearer Token Required
@@ -404,7 +440,7 @@ GET /review?page=1
 }
 ```
 
-### 6. Delete Review
+### 7. Delete Review
 - Method: `DELETE`
 - Endpoint: `/review/{id}`
 - Authorization: Bearer Token Required
