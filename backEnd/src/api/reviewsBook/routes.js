@@ -23,6 +23,11 @@ const routes = (handler) => [
         handler: handler.getReviewByUserId
     },
     {
+        method: 'GET',
+        path: '/review/title/{title}',
+        handler: handler.getReviewByTitle
+    },
+    {
         method: 'PUT',
         path: '/review/{id}',
         handler: handler.putReview,

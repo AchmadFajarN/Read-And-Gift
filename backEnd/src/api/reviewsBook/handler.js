@@ -32,7 +32,8 @@ class ReviewHandler {
     }
 
     async getAllReview(req, h) {
-        const result = await this._reviewService.getAllReview();
+        const page = parseInt(req.query.page, 10) || 1;
+        const result = await this._reviewService.getAllReview(page);
         return {
             status: 'success',
             message: 'Review Berhasil didapatkan',
@@ -72,6 +73,22 @@ class ReviewHandler {
         return response;
     }
 
+    async getReviewByTitle(req, h) {
+        const { title } = req.params;
+
+        const result = await this._reviewService.getReviewByTitle(title);
+
+        const response = h.response({
+            status: 'success',
+            data: {
+                review: result
+            }
+        });
+
+        response.code(201);
+        return response;
+    }
+
     async putReview(req, h) {   
         const { id:owner } = req.auth.credentials
         const { id } = req.params;
@@ -96,7 +113,7 @@ class ReviewHandler {
 
         await this._reviewService.validateReviewOwner(id, owner, role);
         await this._reviewService.deleteReview(id);
-
+    
         const response = h.response({
             status: 'success',
             message: 'review berhasil dihapus'

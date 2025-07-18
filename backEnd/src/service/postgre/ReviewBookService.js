@@ -24,7 +24,9 @@ class ReviewBookService{
         return result.rows[0].id
     }
 
-    async getAllReview() {
+    async getAllReview(page = 1) {
+        const limit = 9;
+        const offset =  (page - 1) * limit
         const query = {
             text: `
             SELECT 
@@ -36,7 +38,9 @@ class ReviewBookService{
                 review_books.genre,
                 cover_url_reviews.url
             FROM review_books LEFT JOIN
-                cover_url_reviews ON review_book_id = review_books.id`,
+                cover_url_reviews ON review_book_id = review_books.id
+            LIMIT $1 OFFSET $2`,
+            values: [limit, offset]
         }
 
         const result = await this._pool.query(query);
@@ -90,6 +94,32 @@ class ReviewBookService{
         const result = await this._pool.query(query);
         
         return result.rows;
+    }
+
+    async getReviewByTitle(title) {
+        const query = {
+            text: `
+            SELECT 
+                review_books.title, 
+                review_books.author, 
+                review_books.publisher, 
+                review_books.publish_year, 
+                review_books.synopsis, 
+                review_books.genre,
+                cover_url_reviews.url
+            FROM review_books LEFT JOIN
+                cover_url_reviews ON review_book_id = review_books.id
+            WHERE review_books.title LIKE $1`,
+            values: [`%${title}%`]
+        }
+
+        const result = await this._pool.query(query);
+
+        if (!result.rowCount) {
+            return []
+        }
+
+        return result.rows
     }
 
     async editPostReview(id, { title, author, publisher, publish_year, synopsis, genre, owner, rating }) {
