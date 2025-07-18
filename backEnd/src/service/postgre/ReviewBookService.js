@@ -56,6 +56,10 @@ class ReviewBookService{
         }
 
         const result = await this._pool.query(queryPool);
+    
+        if (title && !result.rows.length) {
+            throw new NotFoundError(`judul buku ${title} tidak ditemukan`)
+        }
         return result.rows
     }
 

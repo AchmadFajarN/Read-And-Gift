@@ -35,6 +35,7 @@ class ReviewHandler {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 9;
         const { title } = req.query;
+
         const result = await this._reviewService.getAllReview(page, limit, title);
         return {
             status: 'success',
