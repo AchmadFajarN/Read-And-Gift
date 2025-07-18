@@ -305,16 +305,17 @@ Review Buku
 }
 ```
 
-### 2. Get Semua Review (Pagination)
+### 2. Get Semua Review (Pagination & Search)
 - **Method:** `GET`
 - **Endpoint:** `/review`
 - **Query Parameter:**
   - `page` (opsional, default: 1) — nomor halaman yang ingin diambil
   - `limit` (opsional, default: 9) — jumlah review per halaman
+  - `title` (opsional) — pencarian judul buku (partial & case-insensitive)
 
 #### Contoh Request:
 ```
-GET /review?page=2&limit=9
+GET /review?page=2&limit=9&title=Harry
 ```
 
 #### Contoh Response:
@@ -325,15 +326,15 @@ GET /review?page=2&limit=9
   "data": {
     "result": [
       {
-        "title": "Buku A",
-        "author": "Penulis A",
-        "publisher": "Penerbit A",
-        "publish_year": 2024,
-        "synopsis": "Sinopsis buku",
-        "genre": ["Fiksi", "Drama"],
-        "url": "http://localhost:5000/review/img/cover.jpg"
+        "title": "Harry Potter and the Sorcerer's Stone",
+        "author": "J.K. Rowling",
+        "publisher": "Bloomsbury",
+        "publish_year": 1997,
+        "synopsis": "Petualangan Harry Potter...",
+        "genre": ["Fantasi"],
+        "url": "http://localhost:5000/review/img/harry.jpg"
       }
-      // ... maksimal 9 review per halaman
+      // ...maksimal 9 review per halaman, hasil bisa difilter berdasarkan judul
     ]
   }
 }
@@ -341,6 +342,7 @@ GET /review?page=2&limit=9
 
 #### Penjelasan:
 - Gunakan query parameter `page` untuk memilih halaman, dan `limit` untuk menentukan jumlah review per halaman.
+- Gunakan query parameter `title` untuk mencari review berdasarkan judul buku (bisa sebagian kata).
 - Jika tidak menyertakan parameter, maka default adalah halaman pertama dengan 9 review.
 
 ### 3. Get Review By Id
@@ -372,45 +374,10 @@ GET /review?page=2&limit=9
 - Method: `GET`
 - Endpoint: `/review/user/{userId}`
 - Response:  
-  - Sama seperti get semua review, tapi hanya milik user tertentu.
+  - Sama seperti get semua review, tapi hanya milik user tertentu (Tanpa pagination).
 
-### 5. Get Review By Title
-- **Method:** `GET`
-- **Endpoint:** `/review/title/{title}`
-- **Path Parameter:**  
-  - `title` — judul buku yang ingin dicari (bisa partial, tidak case sensitive)
 
-#### Contoh Request:
-```
-GET /review/title/Harry
-```
-
-#### Contoh Response:
-```json
-{
-  "status": "success",
-  "data": {
-    "review": [
-      {
-        "title": "Harry Potter and the Sorcerer's Stone",
-        "author": "J.K. Rowling",
-        "publisher": "Bloomsbury",
-        "publish_year": 1997,
-        "synopsis": "Petualangan Harry Potter...",
-        "genre": ["Fantasi"],
-        "url": "http://localhost:5000/review/img/harry.jpg"
-      }
-      // ...review lain yang judulnya mengandung kata 'Harry'
-    ]
-  }
-}
-```
-
-#### Penjelasan:
-- Endpoint ini akan mengembalikan semua review buku yang judulnya mengandung kata sesuai parameter `title`.
-- Cocok untuk fitur pencarian review berdasarkan judul buku.
-
-### 6. Edit Review
+### 5. Edit Review
 - Method: `PUT`
 - Endpoint: `/review/{id}`
 - Authorization: Bearer Token Required
@@ -424,7 +391,7 @@ GET /review/title/Harry
 }
 ```
 
-### 7. Delete Review
+### 6. Delete Review
 - Method: `DELETE`
 - Endpoint: `/review/{id}`
 - Authorization: Bearer Token Required

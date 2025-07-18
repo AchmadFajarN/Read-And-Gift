@@ -34,7 +34,8 @@ class ReviewHandler {
     async getAllReview(req, h) {
         const page = parseInt(req.query.page, 10) || 1;
         const limit = parseInt(req.query.limit, 10) || 9;
-        const result = await this._reviewService.getAllReview(page, limit);
+        const { title } = req.query;
+        const result = await this._reviewService.getAllReview(page, limit, title);
         return {
             status: 'success',
             message: 'Review Berhasil didapatkan',
@@ -74,21 +75,6 @@ class ReviewHandler {
         return response;
     }
 
-    async getReviewByTitle(req, h) {
-        const { title } = req.params;
-
-        const result = await this._reviewService.getReviewByTitle(title);
-
-        const response = h.response({
-            status: 'success',
-            data: {
-                review: result
-            }
-        });
-
-        response.code(201);
-        return response;
-    }
 
     async putReview(req, h) {   
         const { id:owner } = req.auth.credentials

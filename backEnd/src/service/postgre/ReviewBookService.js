@@ -24,10 +24,9 @@ class ReviewBookService{
         return result.rows[0].id
     }
 
-    async getAllReview(page = 1, limit = 9) {
+    async getAllReview(page = 1, limit = 9, title) {
         const offset =  (page - 1) * limit
-        const query = {
-            text: `
+        let query = `
             SELECT 
                 review_books.title, 
                 review_books.author, 
@@ -37,12 +36,26 @@ class ReviewBookService{
                 review_books.genre,
                 cover_url_reviews.url
             FROM review_books LEFT JOIN
-                cover_url_reviews ON review_book_id = review_books.id
-            LIMIT $1 OFFSET $2`,
-            values: [limit, offset]
+                cover_url_reviews ON review_book_id = review_books.id`
+
+        const values = [];
+        let paramIndex = 1;
+
+        if (title) {
+            query += ` WHERE review_books.title ILIKE $${paramIndex}`;
+            values.push(`%${title}%`);
+            paramIndex++
         }
 
-        const result = await this._pool.query(query);
+        query += ` LIMIT $${paramIndex} OFFSET $${paramIndex + 1}`;
+        values.push(limit, offset);
+
+        const queryPool = {
+            text: query,
+            values
+        }
+
+        const result = await this._pool.query(queryPool);
         return result.rows
     }
 
