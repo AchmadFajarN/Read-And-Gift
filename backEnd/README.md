@@ -291,7 +291,8 @@ Review Buku
   "publish_year": 2024,
   "synopsis": "Sinopsis buku",
   "genre": ["Fiksi", "Drama"],
-  "rating": 5
+  "rating": 5,
+  "description": "Ulasan lengkap tentang buku ini."
 }
 ```
 - Response:

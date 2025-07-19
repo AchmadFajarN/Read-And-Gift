@@ -12,11 +12,11 @@ class ReviewHandler {
         try {
             const { id:owner } = req.auth.credentials;
             console.log(owner)
-            const { title, author, publisher, publish_year, synopsis, genre, rating } = req.payload;
+            const { title, author, publisher, publish_year, synopsis, genre, rating, description } = req.payload;
             this._validator.validatePayloadReview(req.payload);
-    
-            const result = await this._reviewService.addReview({ title, author, publisher, publish_year, synopsis, genre, owner, rating });
-    
+
+            const result = await this._reviewService.addReview({ title, author, publisher, publish_year, synopsis, genre, owner, rating, description });
+
             const response = h.response({
                 status: 'success',
                 message: 'review berhasil ditambahkan',

@@ -11,13 +11,13 @@ class ReviewBookService{
         this._commentService = commentService;
     }
 
-    async addReview({ title, author, publisher, publish_year, synopsis, genre, owner, rating }) {
+    async addReview({ title, author, publisher, publish_year, synopsis, genre, owner, rating, description }) {
         const id = `review-${nanoid(16)}`
         const date = new Date();
 
         const query = {
-            text: `INSERT INTO review_books VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`,
-            values: [id, title, author, publisher, publish_year, synopsis, genre, date, owner, rating]
+            text: `INSERT INTO review_books VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id`,
+            values: [id, title, author, publisher, publish_year, synopsis, genre, date, owner, rating, description]
         }
         
         const result = await this._pool.query(query);
