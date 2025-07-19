@@ -41,7 +41,7 @@ export const mockBooks = [
     title: 'Educated',
     author: 'Tara Westover',
     genre: 'Memoir',
-    coverUrl: 'https://images.pexels.com/photos/1560632/pexels-photo-1560632.jpeg',
+    coverUrl: 'https://images.pexels.com/photos/1261180/pexels-photo-1261180.jpeg',
     description: 'A memoir about a young girl who, kept out of school, leaves her survivalist family and goes on to earn a PhD from Cambridge.',
     averageRating: 4.6,
     totalReviews: 1987,
@@ -83,7 +83,8 @@ export const mockReviews = [
     rating: 5,
     comment: 'Absolutely beautiful and thought-provoking. Haig has created something truly special that makes you think about life\'s infinite possibilities.',
     date: '2024-01-15',
-    userAvatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg'
+    userAvatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg',
+    likes: 12
   },
   {
     id: '2',
@@ -91,7 +92,8 @@ export const mockReviews = [
     userName: 'David Chen',
     rating: 4,
     comment: 'A unique concept executed well. Some parts felt a bit repetitive, but overall a meaningful read that stays with you.',
-    date: '2024-01-12'
+    date: '2024-01-12',
+    likes: 8
   },
   {
     id: '3',
@@ -100,7 +102,8 @@ export const mockReviews = [
     rating: 5,
     comment: 'Life-changing! Clear\'s approach to habit formation is backed by science and incredibly practical. Highly recommend.',
     date: '2024-01-10',
-    userAvatar: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg'
+    userAvatar: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg',
+    likes: 15
   }
 ];
 

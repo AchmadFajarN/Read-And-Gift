@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { apiService } from '../services/api';
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);
@@ -21,22 +22,18 @@ export const useAuth = () => {
   const login = async (email, password) => {
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await apiService.login(email, password);
       
-      // Mock user data
-      const userData = {
-        id: '1',
-        name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
-        email,
-        avatar: `https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg`
-      };
+      // Store auth token
+      if (response.token) {
+        localStorage.setItem('auth_token', response.token);
+      }
       
-      setUser(userData);
-      localStorage.setItem('bookshare_user', JSON.stringify(userData));
+      setUser(response.user);
+      localStorage.setItem('bookshare_user', JSON.stringify(response.user));
       return { success: true };
     } catch (error) {
-      return { success: false, error: 'Login failed' };
+      return { success: false, error: error.message || 'Login failed' };
     } finally {
       setIsLoading(false);
     }
@@ -45,29 +42,33 @@ export const useAuth = () => {
   const signup = async (name, email, password) => {
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await apiService.signup(name, email, password);
       
-      const userData = {
-        id: Date.now().toString(),
-        name,
-        email,
-        avatar: `https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg`
-      };
+      // Store auth token
+      if (response.token) {
+        localStorage.setItem('auth_token', response.token);
+      }
       
-      setUser(userData);
-      localStorage.setItem('bookshare_user', JSON.stringify(userData));
+      setUser(response.user);
+      localStorage.setItem('bookshare_user', JSON.stringify(response.user));
       return { success: true };
     } catch (error) {
-      return { success: false, error: 'Signup failed' };
+      return { success: false, error: error.message || 'Signup failed' };
     } finally {
       setIsLoading(false);
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('bookshare_user');
+  const logout = async () => {
+    try {
+      await apiService.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      setUser(null);
+      localStorage.removeItem('bookshare_user');
+      localStorage.removeItem('auth_token');
+    }
   };
 
   return {
