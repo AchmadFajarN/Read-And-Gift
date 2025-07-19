@@ -541,3 +541,202 @@ Comment Review
 
 
 
+# DONATIONS API
+## postDonationBookHandler
+__Method__
+- Request Http: POST
+- Endpoint: /donations
+- Content-type: multipart/form-data
+- Authentication: Required
+- Request Body
+- payload:
+```json
+{
+  "title": "string",
+  "author": "string",
+  "publisher": "string",
+  "publishYear": "integer",
+  "synopsis": "string",
+  "genre": "string",
+  "bookCondition": "baru || bekas",
+  "cover": "file"
+}
+```
+
+__Response Body__
+Response:
+```json
+{
+  "status": "success",
+  "message": "Buku donasi berhasil ditambahkan",
+  "data": {
+    "bookId": "string"
+  }
+}
+```
+
+## getDonationBooksHandler
+
+__Method__
+- Request Http: GET
+- Endpoint: /donations
+- Authentication: Not Required
+- Query Parameters:
+```
+page: integer (default: 1)
+limit: integer (default: 9)
+```
+
+__Response Body__
+- Response:
+```json
+{
+  "status": "success",
+  "data": [
+    {
+      "id": "string",
+      "title": "string",
+      "author": "string",
+      "...": "..."
+    }
+  ]
+}
+```
+## getDonationBookByIdHandler
+__Method__
+- Request Http: GET
+- Endpoint: /donations/{id}
+- Authentication: Not Required
+
+__Response Body__
+Response:
+```json
+{
+  "status": "success",
+  "data": {
+    "book": {
+      "id": "string",
+      "title": "string",
+      "author": "string",
+      "...": "..."
+    }
+  }
+}
+```
+
+## putDonationBookByIdHandler
+__Method__
+- Request Http: PUT
+- Endpoint: /donations/{id}
+- Content-type: multipart/form-data
+- Authentication: Required
+
+__Request Body__
+payload:
+```json
+{
+  "title": "string",
+  "author": "string",
+  "publisher": "string",
+  "publishYear": "string",
+  "synopsis": "string",
+  "genre": "string",
+  "bookCondition": "string",
+  "cover": "file (optional)"
+}
+```
+
+__Response Body__
+- Response:
+```json
+{
+  "status": "success",
+  "message": "Buku berhasil diperbarui"
+}
+```
+
+## deleteDonationBookByIdHandler
+__Method__
+- Request Http: DELETE
+- Endpoint: /donations/{id}
+- Authentication: Required
+
+__Response Body__
+Response:
+```json
+{
+  "status": "success",
+  "message": "Buku donasi berhasil dihapus"
+}
+```
+
+# RECIPIENT DONATIONS API
+
+## postRecipientDonationHandler
+__Method__
+- Request Http: POST
+- Endpoint: /recipient-donations/{donationBookId}/request
+- Authentication: Required
+
+__Response Body__
+Response:
+```json
+{
+  "status": "success",
+  "data": {
+    "donationStatus": "string",
+    "id": "string"
+  }
+}
+```
+
+## updateDonationStatusHandler
+__Method__
+- Request Http: PATCH
+- Endpoint: /recipient-donations/{recipientDonationId}/status
+- Authentication: Required
+
+__Request Body__
+- payload:
+```json
+{
+  "status": "approve || rejected"
+}
+```
+
+__Response Body__
+
+- Response:
+```json
+{
+  "status": "success",
+  "message": "Status berhasil diperbarui"
+}
+```
+
+## getRecipientDonationsHandler
+__Method__
+- Request Http: GET
+- Endpoint: /recipient-donations
+- Authentication: Required
+
+__Query Parameters__
+- status (optional): string
+- Filter berdasarkan status donasi (pending, approved, rejected)
+
+__Response Body__
+- Response:
+```json
+{
+  "status": "success",
+  "data": [
+    {
+      "id": "recipient_donation-abc123",
+      "donationBookId": "donation_book-xyz456",
+      "recipientId": "user-789",
+      "donorId": "user-123",
+      "donationStatus": "pending"
+    }
+  ]
+}
+```

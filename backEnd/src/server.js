@@ -6,6 +6,7 @@ const Jwt = require('@hapi/jwt');
 const ClientError = require('./exeption/ClientError');
 const UploadValidator = require('./validator/uploads');
 
+
 // user
 const users = require('./api/user');
 const UserValidator = require('./validator/users');
@@ -13,9 +14,14 @@ const UserService = require('./service/postgre/userService');
 
 //DonationBooks
 const donationbooks = require('./api/donationbooks');
-const DonationBookValidator = require('./validator/donationbooks');
+const donationBookValidator = require('./validator/donationbooks/index');
 const DonationBooksService = require('./service/postgre/DonationBooksService');
 const CoverPathDonationsService = require('./service/postgre/CoverPathDonationsService');
+
+//RecipientDonations
+const recipientDonations = require('./api/recipientdonations');
+const RecipientDonationsService = require('./service/postgre/RecipientDonationsService');
+const recipientDonationsValidator = require('./validator/recipientdonations');
 
 // profile storage
 const uploadImageProfile = require("./api/uploadImageProfile");
@@ -60,6 +66,7 @@ const init = async() => {
     const likeService = new LikeReviewService();
     const commentService = new CommentReviewService()
     const reviewService = new ReviewBookService(likeService, commentService);
+    const recipientDonationsService = new RecipientDonationsService();
 
     const server = Hapi.server({
         port: process.env.PORT,
@@ -125,7 +132,7 @@ const init = async() => {
                 donationBooksService,
                 donationstorageService,
                 coverPathDonationsService,
-                DonationBookValidator,
+                donationBookValidator,
             }
         },
         {
@@ -156,6 +163,13 @@ const init = async() => {
                 commentService,
                 validator: commentValidator,
                 reviewService
+            }
+        },
+        {
+            plugin: recipientDonations,
+            options: {
+                recipientDonationsService,
+                recipientDonationsValidator
             }
         }
     ]);
