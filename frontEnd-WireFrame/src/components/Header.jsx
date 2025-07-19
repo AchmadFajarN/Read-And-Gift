@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
-import { BookOpen, Search, User, Heart, LogOut, Home, Gift, List } from 'lucide-react';
-import { useAuth } from '../hooks/useAuth';
-import { AuthModal } from './AuthModal';
+import React, { useState } from "react";
+import {
+  BookOpen,
+  PencilLine,
+  Search,
+  User,
+  Heart,
+  LogOut,
+  Home,
+  Gift,
+  List,
+} from "lucide-react";
+import { useAuth } from "../hooks/useAuth";
+import { AuthModal } from "./AuthModal";
 
-export const Header = ({ 
-  onSearchChange, 
+export const Header = ({
+  onSearchChange,
   searchQuery,
-  currentView = 'home',
+  currentView = "home",
   onNavigateHome,
   onNavigateToBooks,
   onNavigateToDonate,
-  onNavigateToDonations
+  onNavigateToDonations,
 }) => {
   const { user, login, signup, logout, isAuthenticated } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -47,12 +57,14 @@ export const Header = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div 
+            <div
               className="flex items-center space-x-2 cursor-pointer"
               onClick={handleLogoClick}
             >
               <BookOpen className="w-8 h-8 text-blue-700" />
-              <h1 className="text-2xl font-bold text-gray-900">BookShare</h1>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Read and Give
+              </h1>
             </div>
 
             {/* Navigation Links */}
@@ -60,9 +72,9 @@ export const Header = ({
               <button
                 onClick={onNavigateHome}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors duration-200 ${
-                  currentView === 'home' 
-                    ? 'text-blue-700 bg-blue-50' 
-                    : 'text-gray-700 hover:text-blue-700'
+                  currentView === "home"
+                    ? "text-blue-700 bg-blue-50"
+                    : "text-gray-700 hover:text-blue-700"
                 }`}
               >
                 <Home className="w-5 h-5" />
@@ -71,36 +83,47 @@ export const Header = ({
               <button
                 onClick={onNavigateToBooks}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors duration-200 ${
-                  currentView === 'books' 
-                    ? 'text-blue-700 bg-blue-50' 
-                    : 'text-gray-700 hover:text-blue-700'
+                  currentView === "books"
+                    ? "text-blue-700 bg-blue-50"
+                    : "text-gray-700 hover:text-blue-700"
                 }`}
               >
                 <BookOpen className="w-5 h-5" />
                 <span>Browse Books</span>
               </button>
               <button
+                onClick={onNavigateToBooks}
+                className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors duration-200 ${
+                  currentView === "review"
+                    ? "text-blue-700 bg-blue-50"
+                    : "text-gray-700 hover:text-blue-700"
+                }`}
+              >
+                <PencilLine className="w-5 h-5" />
+                <span>Write Review</span>
+              </button>
+              <button
                 onClick={onNavigateToDonations}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors duration-200 ${
-                  currentView === 'donations' 
-                    ? 'text-green-700 bg-green-50' 
-                    : 'text-gray-700 hover:text-green-700'
+                  currentView === "donations"
+                    ? "text-green-700 bg-green-50"
+                    : "text-gray-700 hover:text-green-700"
                 }`}
               >
                 <List className="w-5 h-5" />
                 <span>Donations</span>
               </button>
-              <button
+              {/* <button
                 onClick={onNavigateToDonate}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-colors duration-200 ${
-                  currentView === 'donate' 
-                    ? 'text-green-700 bg-green-50' 
-                    : 'text-gray-700 hover:text-green-700'
+                  currentView === "donate"
+                    ? "text-green-700 bg-green-50"
+                    : "text-gray-700 hover:text-green-700"
                 }`}
               >
                 <Gift className="w-5 h-5" />
                 <span>Donate</span>
-              </button>
+              </button> */}
             </div>
 
             {/* Search Bar */}
@@ -121,11 +144,6 @@ export const Header = ({
             <div className="flex items-center space-x-4">
               {isAuthenticated ? (
                 <>
-                  <button className="flex items-center space-x-1 px-3 py-2 text-gray-700 hover:text-blue-700 transition-colors duration-200">
-                    <Heart className="w-5 h-5" />
-                    <span className="hidden sm:inline">Wishlist</span>
-                  </button>
-                  
                   <div className="relative">
                     <button
                       onClick={() => setShowUserMenu(!showUserMenu)}
@@ -136,13 +154,17 @@ export const Header = ({
                         alt={user?.name}
                         className="w-8 h-8 rounded-full object-cover"
                       />
-                      <span className="hidden sm:inline font-medium">{user?.name}</span>
+                      <span className="hidden sm:inline font-medium">
+                        {user?.name}
+                      </span>
                     </button>
 
                     {showUserMenu && (
                       <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                         <div className="px-4 py-2 border-b border-gray-100">
-                          <p className="text-sm font-medium text-gray-900">{user?.name}</p>
+                          <p className="text-sm font-medium text-gray-900">
+                            {user?.name}
+                          </p>
                           <p className="text-sm text-gray-500">{user?.email}</p>
                         </div>
                         <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200">
@@ -151,7 +173,7 @@ export const Header = ({
                         <button className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200">
                           My Reviews
                         </button>
-                        <button 
+                        <button
                           onClick={onNavigateToDonate}
                           className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
                         >

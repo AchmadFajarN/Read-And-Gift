@@ -1,38 +1,40 @@
-import React, { useState, useMemo } from 'react';
-import { Header } from './components/Header';
-import { BookCard } from './components/BookCard';
-import { FilterSidebar } from './components/FilterSidebar';
-import { BookDetail } from './components/BookDetail';
-import { Homepage } from './components/Homepage';
-import { DonatePage } from './components/DonatePage';
-import { DonationRequestsPage } from './components/DonationRequestsPage';
-import { mockBooks, mockReviews } from './data/mockData';
+import React, { useState, useMemo } from "react";
+import { Header } from "./components/Header";
+import { BookCard } from "./components/BookCard";
+import { BookDetail } from "./components/BookDetail";
+import { Homepage } from "./components/Homepage";
+import { DonatePage } from "./components/DonatePage";
+import { DonationRequestsPage } from "./components/DonationRequestsPage";
+import { mockBooks, mockReviews } from "./data/mockData";
+import { Gift } from "lucide-react";
 
 function App() {
-  const [currentView, setCurrentView] = useState('home');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedGenre, setSelectedGenre] = useState('All');
+  const [currentView, setCurrentView] = useState("home");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("All");
   const [selectedRating, setSelectedRating] = useState(0);
   const [showDonationsOnly, setShowDonationsOnly] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
 
   // Filter books based on search and filters
   const filteredBooks = useMemo(() => {
-    return mockBooks.filter(book => {
-      const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          book.genre.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesGenre = selectedGenre === 'All' || book.genre === selectedGenre;
+    return mockBooks.filter((book) => {
+      const matchesSearch =
+        book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.genre.toLowerCase().includes(searchQuery.toLowerCase());
+
+      const matchesGenre =
+        selectedGenre === "All" || book.genre === selectedGenre;
       const matchesRating = book.averageRating >= selectedRating;
       const matchesDonation = !showDonationsOnly || book.isAvailableForDonation;
-      
+
       return matchesSearch && matchesGenre && matchesRating && matchesDonation;
     });
   }, [searchQuery, selectedGenre, selectedRating, showDonationsOnly]);
 
   const handleClearFilters = () => {
-    setSelectedGenre('All');
+    setSelectedGenre("All");
     setSelectedRating(0);
     setShowDonationsOnly(false);
   };
@@ -46,45 +48,45 @@ function App() {
   };
 
   const handleNavigateToBooks = () => {
-    setCurrentView('books');
+    setCurrentView("books");
     setSelectedBook(null);
   };
 
   const handleNavigateHome = () => {
-    setCurrentView('home');
+    setCurrentView("home");
     setSelectedBook(null);
-    setSearchQuery('');
+    setSearchQuery("");
     handleClearFilters();
   };
 
   const handleNavigateToDonate = () => {
-    setCurrentView('donate');
+    setCurrentView("donate");
     setSelectedBook(null);
   };
 
   const handleNavigateToDonations = () => {
-    setCurrentView('donations');
+    setCurrentView("donations");
     setSelectedBook(null);
   };
 
   const handleBackFromDonate = () => {
-    setCurrentView('books');
+    setCurrentView("books");
   };
 
   const handleBackFromDonations = () => {
-    setCurrentView('books');
+    setCurrentView("books");
   };
 
   const handleSearchChange = (query) => {
     setSearchQuery(query);
-    if (query && currentView === 'home') {
-      setCurrentView('books');
+    if (query && currentView === "home") {
+      setCurrentView("books");
     }
   };
 
   // Get reviews for selected book
-  const bookReviews = selectedBook 
-    ? mockReviews.filter(review => review.bookId === selectedBook.id)
+  const bookReviews = selectedBook
+    ? mockReviews.filter((review) => review.bookId === selectedBook.id)
     : [];
 
   // Show book detail if a book is selected
@@ -99,18 +101,18 @@ function App() {
   }
 
   // Show donate page
-  if (currentView === 'donate') {
+  if (currentView === "donate") {
     return <DonatePage onBack={handleBackFromDonate} />;
   }
 
   // Show donation requests page
-  if (currentView === 'donations') {
+  if (currentView === "donations") {
     return <DonationRequestsPage onBack={handleBackFromDonations} />;
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header 
+      <Header
         onSearchChange={handleSearchChange}
         searchQuery={searchQuery}
         currentView={currentView}
@@ -119,9 +121,9 @@ function App() {
         onNavigateToDonate={handleNavigateToDonate}
         onNavigateToDonations={handleNavigateToDonations}
       />
-      
-      {currentView === 'home' ? (
-        <Homepage 
+
+      {currentView === "home" ? (
+        <Homepage
           onNavigateToBooks={handleNavigateToBooks}
           onSearchChange={handleSearchChange}
         />
@@ -129,7 +131,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Filters Sidebar */}
-            <div className="lg:col-span-1">
+            {/* <div className="lg:col-span-1">
               <FilterSidebar
                 selectedGenre={selectedGenre}
                 selectedRating={selectedRating}
@@ -139,10 +141,10 @@ function App() {
                 onDonationsToggle={setShowDonationsOnly}
                 onClearFilters={handleClearFilters}
               />
-            </div>
+            </div> */}
 
             {/* Books Grid */}
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-4">
               {/* Results Header */}
               <div className="flex items-center justify-between mb-6">
                 <div>
@@ -154,35 +156,33 @@ function App() {
                     {searchQuery && ` for "${searchQuery}"`}
                   </p>
                 </div>
-                
-                <div className="flex items-center space-x-4">
-                  <button
-                    onClick={handleNavigateToDonations}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium"
-                  >
-                    View Donations
-                  </button>
-                  <button
-                    onClick={handleNavigateToDonate}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
-                  >
-                    Donate Book
-                  </button>
-                </div>
+
+                <button
+                  onClick={handleNavigateToDonate}
+                  className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
+                >
+                  <Gift className="w-5 h-5" />
+                  <span>Donate Book</span>
+                </button>
               </div>
 
               {/* Active Filters */}
-              {(searchQuery || selectedGenre !== 'All' || selectedRating > 0 || showDonationsOnly) && (
+              {(searchQuery ||
+                selectedGenre !== "All" ||
+                selectedRating > 0 ||
+                showDonationsOnly) && (
                 <div className="mb-6 p-4 bg-blue-50 rounded-lg">
                   <div className="flex items-center justify-between">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-sm font-medium text-blue-900">Active filters:</span>
+                      <span className="text-sm font-medium text-blue-900">
+                        Active filters:
+                      </span>
                       {searchQuery && (
                         <span className="px-2 py-1 bg-blue-200 text-blue-800 rounded text-sm">
                           Search: "{searchQuery}"
                         </span>
                       )}
-                      {selectedGenre !== 'All' && (
+                      {selectedGenre !== "All" && (
                         <span className="px-2 py-1 bg-blue-200 text-blue-800 rounded text-sm">
                           Genre: {selectedGenre}
                         </span>
