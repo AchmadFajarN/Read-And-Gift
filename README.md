@@ -32,11 +32,16 @@ http://localhost:5173
 
 BackEnd
 --
-Masuk ke direktori backEnd. Pastikan alamat direktori:
+- Masuk ke direktori backEnd. Pastikan alamat direktori:
 ```
 ../Read-And-Gift/backEnd
 ```
-Jalankan Aplikasi (tahap development)
+- Masuk ke  branch backEnd
+```bash
+git checkout backend
+```
+
+- Jalankan Aplikasi (tahap development)
 ```bash
 npm run start:dev
 ```
