@@ -61,9 +61,10 @@ class CommentReviewHandler {
 
     async deleteCommentIdReview(req, h) {
         const { reviewId } = req.params;
-        const { id:userId } = req.auth.credentials;
+        const { id:userId, role } = req.auth.credentials;
 
         await this._reviewService.verifyReviewExist(reviewId);
+        await this._commentService.validateCommentOwner(reviewId, userId, role);
         await this._commentService.deleteComment(reviewId, userId);
 
         const response = h.response({

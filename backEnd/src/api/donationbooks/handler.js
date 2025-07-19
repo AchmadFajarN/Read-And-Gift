@@ -20,7 +20,8 @@ class DonationBooksHandler {
     this._donationBookValidator.validateDonationBookPayload(payload);
     const donationData = {
       ...payload,
-      owner: id
+      owner: id,
+      publishYear: Number(payload.publishYear),
     };
 
     const bookId = await this._donationBooksService.postDonationBook(donationData);
@@ -49,15 +50,19 @@ class DonationBooksHandler {
     throw err;
   }}
 
-  async getDonationBooksHandler() {
-  const books = await this._donationBooksService.getDonationBooks();
-  return {
-    status: 'success',
-    data: {
-      books,
-    },
-  };
-}
+  async getDonationBooksHandler(request) {
+    const { page = 1, limit = 9 } = request.query;
+
+    const data = await this._donationBooksService.getDonationBooks({
+      page: parseInt(page, 10),
+      limit: parseInt(limit, 10),
+    });
+
+    return {
+      status: 'success',
+      data,
+    };
+  }
 
   async getDonationBookByIdHandler(request, h) {
     try{
@@ -78,14 +83,20 @@ class DonationBooksHandler {
   async putDonationBookByIdHandler(request, h) {
     try{
     const { payload } = request;
-    console.log("PAYLIAD TEST", payload);
-    // this._donationBookValidator.validateDonationBookPayload(payload);
+    const newPayload = {
+      ...payload,
+      publishYear: Number(payload.publishYear)
+    }
+
+    console.log("PAYLIAD TEST", newPayload);
+
+    this._donationBookValidator.validateDonationBookPayload(newPayload);
     const { id } = request.params;
     const { id: credentialId } = request.auth.credentials;
     const { role } = request.auth.credentials;
- 
+
     await this._donationBooksService.verifyDonationBookOwner(id, credentialId, role);
-    await this._donationBooksService.putDonationBookById(id, payload);
+    await this._donationBooksService.putDonationBookById(id, newPayload);
     return {
       status: 'success',
       message: 'Buku berhasil diperbarui',

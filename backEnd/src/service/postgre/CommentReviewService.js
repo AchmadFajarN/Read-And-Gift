@@ -1,6 +1,7 @@
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
 const NotFoundError = require('../../exeption/NotFoundError');
+const AuthorizationError = require('../../exeption/AuthorizationError');
 
 class CommentReviewService {
     constructor() {
@@ -62,6 +63,23 @@ class CommentReviewService {
 
         if (!result.rowCount) {
             throw new NotFoundError('komentar tidak ditemukan atau bukan milik anda')
+        }
+    }
+
+    async validateCommentOwner(commentId, ownerId, role) {
+        const query = {
+            text: 'SELECT user_id FROM comments_review WHERE id = $1',
+            values: [commentId]
+        }
+
+        const result = await this._pool.query(query);
+
+        if (!result.rows.length) {
+            throw new NotFoundError('komentar tidak ditemukan');
+        }
+
+        if (result.rows[0].user_id !== ownerId && role !== 'admin') {
+            throw new AuthorizationError('anda tidak memiliki akses untuk menghapus komentar ini');
         }
     }
 }
