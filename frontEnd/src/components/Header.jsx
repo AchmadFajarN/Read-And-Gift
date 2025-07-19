@@ -117,7 +117,7 @@ export const Header = () => {
                 }`}
               >
                 <BookOpen className="w-5 h-5" />
-                <span>Jelajahi Buku</span>
+                <span>Telusuri Buku</span>
               </button>
               <button
                 onClick={() => navigate('/donations')}
@@ -128,7 +128,7 @@ export const Header = () => {
                 }`}
               >
                 <List className="w-5 h-5" />
-                <span>Donasi</span>
+                <span>Daftar Donasi</span>
               </button>
               <button
                 onClick={() => navigate('/donate')}
@@ -139,7 +139,7 @@ export const Header = () => {
                 }`}
               >
                 <Gift className="w-5 h-5" />
-                <span>Donasikan</span>
+                <span>Donasi Buku</span>
               </button>
             </div>
 
@@ -177,7 +177,7 @@ export const Header = () => {
                         >
                           <div className="flex items-center space-x-2">
                             <User className="w-4 h-4" />
-                            <span>Profil Saya</span>
+                            <span>Profil</span>
                           </div>
                         </button>
                         <button 
@@ -189,7 +189,7 @@ export const Header = () => {
                         >
                           <div className="flex items-center space-x-2">
                             <BookOpen className="w-4 h-4" />
-                            <span>Ulasan Saya</span>
+                            <span>Ulasan</span>
                           </div>
                         </button>
                         <button 
@@ -201,7 +201,7 @@ export const Header = () => {
                         >
                           <div className="flex items-center space-x-2">
                             <Gift className="w-4 h-4" />
-                            <span>Donasi Saya</span>
+                            <span>Donasi</span>
                           </div>
                         </button>
                         <div className="border-t border-gray-100 mt-2 pt-2">
@@ -210,7 +210,7 @@ export const Header = () => {
                             className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200 flex items-center space-x-2"
                           >
                             <LogOut className="w-4 h-4" />
-                            <span>Keluar</span>
+                            <span>Logout</span>
                           </button>
                         </div>
                       </div>
@@ -225,7 +225,7 @@ export const Header = () => {
                     className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
                   >
                     <User className="w-5 h-5" />
-                    <span>Masuk</span>
+                    <span>Login</span>
                   </button>
                 </>
               )}

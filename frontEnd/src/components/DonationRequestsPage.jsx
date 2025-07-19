@@ -156,9 +156,9 @@ export const DonationRequestsPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Available Book Donations</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Daftar Donasi Buku</h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Connect with generous community members who are sharing their books with fellow readers
+            Terhubung dengan anggota komunitas yang berbagi buku dengan sesama pembaca
           </p>
         </div>
 
@@ -166,7 +166,7 @@ export const DonationRequestsPage = () => {
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Search Books</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Cari Buku</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
@@ -174,7 +174,7 @@ export const DonationRequestsPage = () => {
                   value={filters.searchQuery}
                   onChange={(e) => handleInputChange('searchQuery', e.target.value)}
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="Search book titles..."
+                  placeholder="Cari berdasarkan judul buku..."
                 />
               </div>
             </div>
@@ -184,8 +184,8 @@ export const DonationRequestsPage = () => {
         {/* Results */}
         <div className="mb-6">
           <p className="text-gray-600">
-            {filteredRequests.length} donation{filteredRequests.length !== 1 ? 's' : ''} available
-            {filters.searchQuery && ` for "${filters.searchQuery}"`}
+            {filteredRequests.length} donasi tersedia
+            {filters.searchQuery && ` untuk "${filters.searchQuery}"`}
           </p>
         </div>
 
@@ -205,7 +205,7 @@ export const DonationRequestsPage = () => {
                       <h3 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
                         {request.bookTitle}
                       </h3>
-                      <p className="text-gray-600 mb-2">by {request.bookAuthor}</p>
+                      <p className="text-gray-600 mb-2">oleh {request.bookAuthor}</p>
                       <p className="text-gray-500 text-sm mb-3 line-clamp-2">
                         {request.notes}
                       </p>
@@ -217,7 +217,7 @@ export const DonationRequestsPage = () => {
                     className="w-full flex items-center justify-center space-x-2 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    <span>Contact Donor</span>
+                    <span>Hubungi Donatur</span>
                   </button>
                 </div>
               </div>
@@ -227,10 +227,10 @@ export const DonationRequestsPage = () => {
           <div className="text-center py-12">
             <div className="text-gray-400 text-6xl mb-4">📚</div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              No donations found
+              Donasi tidak ditemukan
             </h3>
             <p className="text-gray-600 mb-4">
-              Try adjusting your search or filters to find available books.
+              Coba sesuaikan pencarian Anda untuk menemukan buku yang tersedia.
             </p>
             <button
               onClick={() => {
@@ -238,7 +238,7 @@ export const DonationRequestsPage = () => {
               }}
               className="text-blue-600 hover:text-blue-800 font-medium"
             >
-              Clear all filters
+              Hapus pencarian
             </button>
           </div>
         )}
@@ -248,7 +248,7 @@ export const DonationRequestsPage = () => {
       {modalState.contactModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl max-w-md w-full p-6">
-            <h3 className="text-xl font-semibold mb-4">Contact {modalState.contactModal.donorName}</h3>
+            <h3 className="text-xl font-semibold mb-4">Hubungi {modalState.contactModal.donorName}</h3>
             <div className="space-y-4 mb-6">
               <div className="flex items-start space-x-3">
                 <img
@@ -258,12 +258,12 @@ export const DonationRequestsPage = () => {
                 />
                 <div>
                   <h4 className="font-medium text-gray-900">{modalState.contactModal.bookTitle}</h4>
-                  <p className="text-sm text-gray-600">by {modalState.contactModal.bookAuthor}</p>
+                  <p className="text-sm text-gray-600">oleh {modalState.contactModal.bookAuthor}</p>
                 </div>
               </div>
               
               <div className="bg-blue-50 p-4 rounded-lg">
-                <h4 className="font-medium text-blue-900 mb-2">Contact Information:</h4>
+                <h4 className="font-medium text-blue-900 mb-2">Informasi Kontak:</h4>
                 <div className="space-y-2">
                   {modalState.contactModal.contactMethod === 'email' ? (
                     <div className="flex items-center space-x-2 text-blue-800">
@@ -280,12 +280,12 @@ export const DonationRequestsPage = () => {
               </div>
 
               <div className="text-sm text-gray-600">
-                <p className="font-medium mb-1">Tips for contacting:</p>
+                <p className="font-medium mb-1">Tips menghubungi:</p>
                 <ul className="list-disc list-inside space-y-1 text-xs">
-                  <li>Be polite and introduce yourself</li>
-                  <li>Mention the specific book you're interested in</li>
-                  <li>Suggest a convenient meeting location</li>
-                  <li>Be flexible with timing</li>
+                  <li>Bersikap sopan dan perkenalkan diri</li>
+                  <li>Sebutkan buku yang Anda minati</li>
+                  <li>Sarankan lokasi pertemuan yang nyaman</li>
+                  <li>Fleksibel dengan waktu</li>
                 </ul>
               </div>
             </div>
@@ -295,17 +295,17 @@ export const DonationRequestsPage = () => {
                 onClick={() => closeModal('contactModal')}
                 className={`${modalState.contactModal.contactMethod === 'phone' ? 'w-full' : 'flex-1'} px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200`}
               >
-                Close
+                Tutup
               </button>
               {modalState.contactModal.contactMethod === 'email' && (
                 <button
                   onClick={() => {
-                    window.open(`mailto:${modalState.contactModal.donorContact}?subject=Interest in "${modalState.contactModal.bookTitle}"&body=Hi ${modalState.contactModal.donorName},%0D%0A%0D%0AI'm interested in the copy of "${modalState.contactModal.bookTitle}" you have available for donation. Could we arrange a time to meet?%0D%0A%0D%0AThank you!`);
+                    window.open(`mailto:${modalState.contactModal.donorContact}?subject=Minat pada "${modalState.contactModal.bookTitle}"&body=Halo ${modalState.contactModal.donorName},%0D%0A%0D%0ASaya tertarik dengan buku "${modalState.contactModal.bookTitle}" yang Anda donasikan. Bisakah kita mengatur waktu untuk bertemu?%0D%0A%0D%0ATerima kasih!`);
                     closeModal('contactModal');
                   }}
                   className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
                 >
-                  Send Email
+                  Kirim Email
                 </button>
               )}
             </div>
@@ -317,22 +317,22 @@ export const DonationRequestsPage = () => {
       {modalState.authPrompt && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl max-w-md w-full p-6">
-            <h3 className="text-xl font-semibold mb-4">Sign In Required</h3>
+            <h3 className="text-xl font-semibold mb-4">Login Diperlukan</h3>
             <p className="text-gray-600 mb-6">
-              Please sign in to contact donors and request book donations.
+              Silakan login untuk menghubungi donatur dan meminta donasi buku.
             </p>
             <div className="flex space-x-3">
               <button
                 onClick={() => closeModal('authPrompt')}
                 className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
               >
-                Cancel
+                Batal
               </button>
               <button 
                 onClick={() => closeModal('authPrompt')}
                 className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
               >
-                Sign In
+                Login
               </button>
             </div>
           </div>

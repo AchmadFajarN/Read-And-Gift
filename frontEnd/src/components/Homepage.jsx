@@ -31,11 +31,11 @@ export const Homepage = () => {
             <div className="space-y-8">
               <div className="space-y-4">
                 <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Temukan
-                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Bacaan Hebat Berikutnya</span>
+                  Temukan Buku
+                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> Favorit Anda</span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  Bergabunglah dengan ribuan pecinta buku yang berbagi ulasan, menemukan cerita baru, dan menyebarkan kegembiraan membaca melalui platform donasi kami.
+                  Bergabunglah dengan komunitas pecinta buku untuk berbagi ulasan, menemukan bacaan baru, dan menyebarkan kegembiraan membaca melalui donasi buku.
                 </p>
               </div>
 
@@ -46,7 +46,7 @@ export const Homepage = () => {
                   className="flex items-center justify-center space-x-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transform hover:scale-105 transition-all duration-200 shadow-lg"
                 >
                   <BookOpen className="w-5 h-5" />
-                  <span>Jelajahi Buku</span>
+                  <span>Telusuri Buku</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
                 <button
@@ -54,7 +54,7 @@ export const Homepage = () => {
                   className="flex items-center justify-center space-x-2 px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:border-blue-600 hover:text-blue-600 transition-all duration-200"
                 >
                   <Gift className="w-5 h-5" />
-                  <span>Donasikan Buku</span>
+                  <span>Donasi Buku</span>
                 </button>
               </div>
             </div>
@@ -104,10 +104,10 @@ export const Homepage = () => {
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Siap Memulai Perjalanan Membaca Anda?
+            Siap Memulai Petualangan Membaca?
           </h2>
           <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-            Bergabunglah dengan ribuan penggemar buku yang telah menemukan bacaan hebat berikutnya melalui Read & Give.
+            Bergabunglah dengan ribuan pembaca yang telah menemukan buku favorit mereka melalui Read&Give.
           </p>
           {/* Tombol aksi sekunder */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -116,14 +116,14 @@ export const Homepage = () => {
               className="flex items-center justify-center space-x-2 px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:bg-gray-50 transform hover:scale-105 transition-all duration-200 shadow-lg"
             >
               <BookOpen className="w-5 h-5" />
-              <span>Jelajahi Buku Sekarang</span>
+              <span>Mulai Telusuri</span>
             </button>
             <button 
               onClick={() => navigate('/donate')}
               className="flex items-center justify-center space-x-2 px-8 py-4 border-2 border-white text-white rounded-xl font-semibold hover:bg-white hover:text-blue-600 transition-all duration-200"
             >
               <Gift className="w-5 h-5" />
-              <span>Donasikan Buku</span>
+              <span>Donasi Buku</span>
             </button>
           </div>
         </div>

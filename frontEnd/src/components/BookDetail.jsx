@@ -214,7 +214,7 @@ export const BookDetail = ({ reviews }) => {
             className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span>Back to Books</span>
+            <span>Kembali ke Daftar Buku</span>
           </button>
         </div>
       </div>
@@ -240,8 +240,8 @@ export const BookDetail = ({ reviews }) => {
               <div className="flex items-center space-x-4 mb-6">
                 <StarRating rating={book.averageRating} size="lg" />
                 <span className="text-lg font-medium">{book.averageRating}</span>
-                <span className="text-gray-500">({book.totalReviews} reviews)</span>
-                <span className="text-gray-500">• Published {book.publishedYear}</span>
+                <span className="text-gray-500">({book.totalReviews} ulasan)</span>
+                <span className="text-gray-500">• Terbit {book.publishedYear}</span>
               </div>
 
               <p className="text-gray-700 text-lg leading-relaxed">{book.description}</p>
@@ -250,7 +250,7 @@ export const BookDetail = ({ reviews }) => {
                 <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                   <div className="flex items-center space-x-2 text-green-800">
                     <Gift className="w-5 h-5" />
-                    <span className="font-medium">This book was donated by {book.donatedBy}</span>
+                    <span className="font-medium">Buku ini didonasikan oleh {book.donatedBy}</span>
                   </div>
                 </div>
               )}
@@ -258,22 +258,22 @@ export const BookDetail = ({ reviews }) => {
 
             {/* Reviews Section */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Reviews</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Ulasan</h2>
               
               {/* Add Review Form */}
               <div className="bg-gray-50 rounded-lg p-6 mb-8">
-                <h3 className="text-lg font-semibold mb-4">Write a Review</h3>
+                <h3 className="text-lg font-semibold mb-4">Tulis Ulasan</h3>
                 {!isAuthenticated && (
                   <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
                     <p className="text-blue-800 text-sm">
-                      Please sign in to write a review.
+                      Silakan login untuk menulis ulasan.
                     </p>
                   </div>
                 )}
                 <form onSubmit={handleSubmitReview} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Your Rating
+                      Rating Anda
                     </label>
                     <StarRating
                       rating={newReview?.rating || 0}
@@ -284,7 +284,7 @@ export const BookDetail = ({ reviews }) => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Your Review
+                      Ulasan Anda
                     </label>
                     <textarea
                       value={newReview?.comment || ''}
@@ -292,7 +292,7 @@ export const BookDetail = ({ reviews }) => {
                       rows={4}
                       disabled={!isAuthenticated}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
-                      placeholder={isAuthenticated ? "Share your thoughts about this book..." : "Please sign in to write a review"}
+                      placeholder={isAuthenticated ? "Bagikan pendapat Anda tentang buku ini..." : "Silakan login untuk menulis ulasan"}
                     />
                   </div>
                   <button
@@ -300,7 +300,7 @@ export const BookDetail = ({ reviews }) => {
                     disabled={!isAuthenticated}
                     className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
-                    Submit Review
+                    Kirim Ulasan
                   </button>
                 </form>
               </div>
@@ -335,14 +335,14 @@ export const BookDetail = ({ reviews }) => {
                                 }`}
                               >
                                 <Heart className={`w-4 h-4 ${likedReviews.has(review.id) ? 'fill-current' : ''}`} />
-                                <span className="text-sm">Helpful</span>
+                                <span className="text-sm">Membantu</span>
                               </button>
                               <button
                                 onClick={() => toggleComments(review.id)}
                                 className="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors duration-200"
                               >
                                 <MessageCircle className="w-4 h-4" />
-                                <span className="text-sm">Comment</span>
+                                <span className="text-sm">Komentar</span>
                                 {expandedComments[review.id] ? (
                                   <ChevronUp className="w-3 h-3" />
                                 ) : (
@@ -351,7 +351,7 @@ export const BookDetail = ({ reviews }) => {
                               </button>
                             </div>
                             <span className="text-sm text-gray-400">
-                              {reviewLikes[review.id] || 0} people found this helpful
+                              {reviewLikes[review.id] || 0} orang merasa terbantu
                             </span>
                           </div>
 
@@ -391,7 +391,7 @@ export const BookDetail = ({ reviews }) => {
                                           type="text"
                                           value={newComment?.text || ''}
                                           onChange={(e) => handleCommentChange('text', e.target.value)}
-                                          placeholder="Add a comment..."
+                                          placeholder="Tambahkan komentar..."
                                           className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                                           onKeyPress={(e) => {
                                             if (e.key === 'Enter') {
@@ -415,9 +415,9 @@ export const BookDetail = ({ reviews }) => {
                                         onClick={() => openModal('authPrompt')}
                                         className="text-blue-600 hover:text-blue-800 font-medium"
                                       >
-                                        Sign in
+                                        Login
                                       </button>
-                                      {' '}to add a comment
+                                      {' '}untuk menambahkan komentar
                                     </p>
                                   </div>
                                 )}
@@ -440,16 +440,16 @@ export const BookDetail = ({ reviews }) => {
       {modalState.authPrompt && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <h3 className="text-xl font-semibold mb-4">Sign In Required</h3>
+            <h3 className="text-xl font-semibold mb-4">Login Diperlukan</h3>
             <p className="text-gray-600 mb-6">
-              Please sign in to access this feature and interact with the Read&Give community.
+              Silakan login untuk mengakses fitur ini dan berinteraksi dengan komunitas Read&Give.
             </p>
             <div className="flex space-x-3">
               <button
                 onClick={() => closeModal('authPrompt')}
                 className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200"
               >
-                Cancel
+                Batal
               </button>
               <button 
                 onClick={() => {
@@ -458,7 +458,7 @@ export const BookDetail = ({ reviews }) => {
                 }}
                 className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
               >
-                Sign In
+                Login
               </button>
             </div>
           </div>

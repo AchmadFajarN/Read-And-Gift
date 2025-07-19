@@ -111,7 +111,7 @@ export const BooksPage = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Cari judul buku..."
+                  placeholder="Cari buku berdasarkan judul..."
                   value={searchQuery}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-lg"
@@ -124,11 +124,11 @@ export const BooksPage = () => {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl font-bold text-gray-900">
-                Temukan Buku
+                Koleksi Buku
               </h2>
               <p className="text-gray-600 mt-1">
-                {filteredBooks.length} buku ditemukan
-                {searchQuery && ` for "${searchQuery}"`}
+                {filteredBooks.length} buku tersedia
+                {searchQuery && ` untuk "${searchQuery}"`}
               </p>
             </div>
           </div>
@@ -138,10 +138,10 @@ export const BooksPage = () => {
             <div className="mb-6 p-4 bg-blue-50 rounded-lg">
               <div className="flex items-center justify-between">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm font-medium text-blue-900">Filter aktif:</span>
+                  <span className="text-sm font-medium text-blue-900">Pencarian aktif:</span>
                   {searchQuery && (
                     <span className="px-2 py-1 bg-blue-200 text-blue-800 rounded text-sm">
-                      Pencarian: "{searchQuery}"
+                      "{searchQuery}"
                     </span>
                   )}
                 </div>
@@ -149,7 +149,7 @@ export const BooksPage = () => {
                   onClick={clearFilters}
                   className="text-blue-600 hover:text-blue-800 text-sm font-medium"
                 >
-                  Hapus semua
+                  Hapus
                 </button>
               </div>
             </div>
@@ -172,16 +172,16 @@ export const BooksPage = () => {
               <div className="text-center py-12">
                 <div className="text-gray-400 text-6xl mb-4">📚</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Tidak ada buku ditemukan
+                  Buku tidak ditemukan
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  Coba sesuaikan pencarian atau filter Anda untuk menemukan lebih banyak buku.
+                  Coba kata kunci lain untuk menemukan buku yang Anda cari.
                 </p>
                 <button
                   onClick={clearFilters}
                   className="text-blue-600 hover:text-blue-800 font-medium"
                 >
-                  Hapus semua filter
+                  Hapus pencarian
                 </button>
               </div>
             </>

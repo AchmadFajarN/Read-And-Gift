@@ -114,9 +114,9 @@ export const ProfilePage = () => {
   const displayReviews = userReviews.length > 0 ? userReviews : mockUserReviews;
 
   const tabs = [
-    { id: 'profile', label: 'Profile', icon: User },
-    { id: 'reviews', label: 'My Reviews', icon: Star },
-    { id: 'donations', label: 'My Donations', icon: Gift }
+    { id: 'profile', label: 'Profil', icon: User },
+    { id: 'reviews', label: 'Ulasan Saya', icon: Star },
+    { id: 'donations', label: 'Donasi Saya', icon: Gift }
   ];
 
   // Fetch user data when component mounts or tab changes
@@ -147,7 +147,7 @@ export const ProfilePage = () => {
   // Mock user data with more details
   const userProfile = {
     ...user,
-    bio: 'Passionate reader who loves sharing great books with the community. Always looking for my next great read!',
+    bio: 'Pembaca yang antusias dan suka berbagi buku bagus dengan komunitas. Selalu mencari bacaan menarik berikutnya!',
     totalReviews: 23,
     totalDonations: 7,
   };
@@ -170,7 +170,7 @@ export const ProfilePage = () => {
                 </div>
                 <button className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200">
                   <Edit2 className="w-4 h-4" />
-                  <span>Edit Profile</span>
+                  <span>Edit Profil</span>
                 </button>
               </div>
               
@@ -179,11 +179,11 @@ export const ProfilePage = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-3 bg-yellow-50 rounded-lg">
                   <div className="text-2xl font-bold text-yellow-600">{userProfile.totalReviews}</div>
-                  <div className="text-sm text-yellow-800">Reviews</div>
+                  <div className="text-sm text-yellow-800">Ulasan</div>
                 </div>
                 <div className="text-center p-3 bg-green-50 rounded-lg">
                   <div className="text-2xl font-bold text-green-600">{userProfile.totalDonations}</div>
-                  <div className="text-sm text-green-800">Donations</div>
+                  <div className="text-sm text-green-800">Donasi</div>
                 </div>
               </div>
             </div>
@@ -220,7 +220,7 @@ export const ProfilePage = () => {
           {currentTab === 'profile' && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Personal Information</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Informasi Pribadi</h3>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
                   <p className="text-gray-900">{userProfile.email}</p>
@@ -232,13 +232,13 @@ export const ProfilePage = () => {
           {currentTab === 'reviews' && (
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-gray-900">My Reviews ({displayReviews.length})</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Ulasan Saya ({displayReviews.length})</h3>
               </div>
               
               {loading ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                  <p className="text-gray-600">Loading reviews...</p>
+                  <p className="text-gray-600">Memuat ulasan...</p>
                 </div>
               ) : (
               <div className="space-y-6">
@@ -254,7 +254,7 @@ export const ProfilePage = () => {
                         <div className="flex items-start justify-between mb-2">
                           <div>
                             <h4 className="text-lg font-semibold text-gray-900">{review.bookTitle}</h4>
-                            <p className="text-gray-600">by {review.bookAuthor}</p>
+                            <p className="text-gray-600">oleh {review.bookAuthor}</p>
                           </div>
                           <div className="text-right">
                             <StarRating rating={review.rating} size="sm" />
@@ -267,11 +267,11 @@ export const ProfilePage = () => {
                         <div className="flex items-center space-x-4 text-sm text-gray-500">
                           <div className="flex items-center space-x-1">
                             <Heart className="w-4 h-4" />
-                            <span>{review.likes} likes</span>
+                            <span>{review.likes} suka</span>
                           </div>
                           <div className="flex items-center space-x-1">
                             <MessageCircle className="w-4 h-4" />
-                            <span>{review.helpful} found helpful</span>
+                            <span>{review.helpful} terbantu</span>
                           </div>
                         </div>
                       </div>
@@ -287,17 +287,17 @@ export const ProfilePage = () => {
             <div>
               <div className="flex items-center justify-between mb-6">
                   onClick={() => navigate('/donate')}
-                <h3 className="text-lg font-semibold text-gray-900">My Donations ({donations.length})</h3>
+                <h3 className="text-lg font-semibold text-gray-900">Donasi Saya ({donations.length})</h3>
                 <button className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200">
                   <Gift className="w-4 h-4" />
-                  <span>Donate New Book</span>
+                  <span>Donasi Buku Baru</span>
                 </button>
               </div>
               
               {loading ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto mb-4"></div>
-                  <p className="text-gray-600">Loading donations...</p>
+                  <p className="text-gray-600">Memuat donasi...</p>
                 </div>
               ) : (
               <div className="space-y-6">
@@ -313,7 +313,7 @@ export const ProfilePage = () => {
                         <div className="flex items-start justify-between mb-2">
                           <div>
                             <h4 className="text-lg font-semibold text-gray-900">{donation.bookTitle}</h4>
-                            <p className="text-gray-600">by {donation.bookAuthor}</p>
+                            <p className="text-gray-600">oleh {donation.bookAuthor}</p>
                           </div>
                           <div className="text-right">
                             <div className="relative">
@@ -329,7 +329,7 @@ export const ProfilePage = () => {
                               </select>
                               <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 w-3 h-3 pointer-events-none" />
                             </div>
-                            <p className="text-sm text-gray-500 mt-1">Posted {formatDate(donation.datePosted)}</p>
+                            <p className="text-sm text-gray-500 mt-1">Diposting {formatDate(donation.datePosted)}</p>
                           </div>
                         </div>
                         
@@ -342,7 +342,7 @@ export const ProfilePage = () => {
                             ) : (
                               <span>
                                 {donation.claimedBy && donation.claimedDate 
-                                  ? `Claimed by ${donation.claimedBy} on ${formatDate(donation.claimedDate)}`
+                                  ? `Diambil oleh ${donation.claimedBy} pada ${formatDate(donation.claimedDate)}`
                                   : `Status: ${donation.status}`
                                 }
                               </span>
@@ -354,7 +354,7 @@ export const ProfilePage = () => {
                             </button>
                             {donation.status === DONATION_STATUS.AVAILABLE && (
                               <button className="text-red-600 hover:text-red-800 text-sm font-medium">
-                                Remove
+                                Hapus
                               </button>
                             )}
                           </div>

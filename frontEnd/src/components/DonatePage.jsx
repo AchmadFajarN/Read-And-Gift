@@ -193,16 +193,16 @@ export const DonatePage = () => {
           <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
             <BookOpen className="w-10 h-10 text-white" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Masuk untuk Mendonasikan</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Login untuk Donasi</h2>
           <p className="text-gray-600 mb-6">
-            Silakan masuk ke akun Anda untuk mulai mendonasikan buku ke komunitas Read&Give.
+            Silakan login ke akun Anda untuk mulai mendonasikan buku ke komunitas Read&Give.
           </p>
           <div className="space-y-3">
             <button
               onClick={() => openModal('authModal')}
               className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all duration-200"
             >
-              Masuk untuk Melanjutkan
+              Login untuk Melanjutkan
             </button>
             <button
               onClick={() => navigate('/books')}
@@ -232,22 +232,22 @@ export const DonatePage = () => {
           <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
             <Check className="w-10 h-10 text-white" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Donasi Berhasil Dikirim!</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Donasi Berhasil!</h2>
           <p className="text-gray-600 mb-6">
-            Terima kasih telah mendonasikan "{formData.title}" ke komunitas Read&Give. Buku Anda akan ditinjau dan tersedia untuk pembaca lain segera.
+            Terima kasih telah mendonasikan "{formData.title}" ke komunitas Read&Give. Buku Anda akan segera tersedia untuk pembaca lain.
           </p>
           <div className="space-y-3">
             <button
               onClick={handleStartOver}
               className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all duration-200"
             >
-              Donasikan Buku Lain
+              Donasi Buku Lain
             </button>
             <button
               onClick={() => navigate('/books')}
               className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-all duration-200"
             >
-              Kembali ke Buku
+              Kembali ke Daftar Buku
             </button>
           </div>
         </div>
@@ -266,7 +266,7 @@ export const DonatePage = () => {
             className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-200"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span>Kembali ke Buku</span>
+            <span>Kembali ke Daftar Buku</span>
           </button>
         </div>
       </div>
@@ -295,8 +295,8 @@ export const DonatePage = () => {
         {step === 'form' && (
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Donasikan Buku</h1>
-              <p className="text-gray-600">Bagikan buku Anda dengan sesama pembaca di komunitas</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Donasi Buku</h1>
+              <p className="text-gray-600">Bagikan buku Anda dengan pembaca lain di komunitas</p>
             </div>
 
             <form onSubmit={handleFormSubmit} className="space-y-6">
@@ -326,7 +326,7 @@ export const DonatePage = () => {
                     ) : (
                       <label className="w-32 h-48 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-green-500 transition-colors duration-200">
                         <Camera className="w-8 h-8 text-gray-400 mb-2" />
-                        <span className="text-sm text-gray-500 text-center">Upload Sampul</span>
+                        <span className="text-sm text-gray-500 text-center">Unggah Sampul</span>
                         <input
                           type="file"
                           accept="image/*"
@@ -383,7 +383,7 @@ export const DonatePage = () => {
                           value={formData.publishedYear}
                           onChange={(e) => handleInputChange('publishedYear', e.target.value)}
                           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                          placeholder="contoh: 2023"
+                          placeholder="Contoh: 2023"
                         />
                       </div>
                     </div>
@@ -409,7 +409,7 @@ export const DonatePage = () => {
                   type="submit"
                   className="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all duration-200 shadow-lg"
                 >
-                  Lanjut ke Info Kontak
+                  Lanjut ke Informasi Kontak
                 </button>
               </div>
             </form>
@@ -420,14 +420,14 @@ export const DonatePage = () => {
         {step === 'location' && (
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Informasi Kontak</h1>
-              <p className="text-gray-600">Bagaimana pembaca yang tertarik dapat menghubungi Anda?</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Info Kontak</h1>
+              <p className="text-gray-600">Bagaimana cara pembaca menghubungi Anda?</p>
             </div>
 
             <form onSubmit={handleLocationSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Alamat Jalan</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
                   <input
                     type="text"
                     value={locationData.address}
@@ -471,7 +471,7 @@ export const DonatePage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">Metode Kontak Pilihan</label>
+                <label className="block text-sm font-medium text-gray-700 mb-3">Metode Kontak</label>
                 <div className="space-y-3">
                   <label className="flex items-center">
                     <input
@@ -482,7 +482,7 @@ export const DonatePage = () => {
                       onChange={(e) => handleLocationChange('contactMethod', e.target.value)}
                       className="mr-3"
                     />
-                    <span>Email (kami akan membagikan email Anda dengan pembaca yang tertarik)</span>
+                    <span>Email (email Anda akan dibagikan kepada pembaca yang berminat)</span>
                   </label>
                   <label className="flex items-center">
                     <input
@@ -519,7 +519,7 @@ export const DonatePage = () => {
                   onChange={(e) => handleLocationChange('notes', e.target.value)}
                   rows={3}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                  placeholder="Instruksi khusus untuk pengambilan atau kontak..."
+                  placeholder="Catatan khusus untuk pengambilan buku..."
                 />
               </div>
 
